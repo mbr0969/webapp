@@ -5,15 +5,15 @@ package loc.linux.webapp.model;
  */
 public class Section {
 //данные класа Section
-    private final String type;
+    protected SectionType type;
 
 //методы классе Section
 
-    public Section(String type) {
-        this.type = type;
-    }
+   // public Section(SectionType type) {
+   //     this.type = type;
+   // }
 
-    public String getType() {
-        return type;
-    }
+   // public SectionType getType() {
+     //   return type;
+   // }
 }
