@@ -29,6 +29,7 @@ public class Link {
         if (!name.equals(link.name)) return false;
         return url != null ? url.equals(link.url) : link.url == null;
 
+
     }
 
     @Override
