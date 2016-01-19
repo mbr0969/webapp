@@ -18,6 +18,5 @@ public class Main {
         System.out.println(link2);
         System.out.println(Link.Empty());
         System.out.println(link1.Empty());
-
     }
 }
