@@ -20,13 +20,4 @@ public class Organization {
     public String getName() {
         return name;
     }
-
-    //public String getUrl() {
-//        return url;
-//    }
-
-//    public String getAdress() {
-//        return adress;
-//    }
-//
 }

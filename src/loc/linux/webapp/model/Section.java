@@ -7,13 +7,4 @@ public class Section {
 //данные класа Section
     protected SectionType type;
 
-//методы классе Section
-
-   // public Section(SectionType type) {
-   //     this.type = type;
-   // }
-
-   // public SectionType getType() {
-     //   return type;
-   // }
 }
