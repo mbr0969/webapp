@@ -16,7 +16,12 @@ public class Main {
         Link link = new Link("Linux","papa.linux.loc");
         System.out.println(link.getName());
         System.out.println(field.get(link));
+        System.out.println(link instanceof Link);
 
-
+        StringBuffer fill = new StringBuffer();
+        for (int i = 0; i< 100; i++){
+            fill.append("a");
+        }
+        System.out.println(fill);
     }
 }
