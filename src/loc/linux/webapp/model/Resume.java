@@ -28,7 +28,7 @@ public class Resume {
 //-------------------------------------------------
 
 //-------------Add Contacts and section-------------
-    void addContact(Contact cantact){
+public void addContact(Contact cantact){
         contacts.add(cantact);
     }
 

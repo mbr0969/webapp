@@ -9,9 +9,10 @@ import java.util.Collection;
  * Created by papa on 20.01.2016.
  */
 public class ArrayStorage implements IStorage {
-    private static final int LIMIT = 10000;
-    private Resume[]  array = new Resume[LIMIT];
+    private static final int LIMIT = 100;
+    private Resume[] array = new Resume[LIMIT];
     private int size = 0;
+    int index = 0;
 
 
     @Override
@@ -22,18 +23,34 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void save(Resume r) {
-        if (size==0){
-            array[0] = r;
-        }
-        else {
-            array[size++] = r;
-        }
+//        int idx = -1;
+//        for(int i = 0; i<LIMIT; i++) {
+//            Resume resume = array[i];
+//            if (resume != null) {
+//                if (r.equals(resume)){
+//                    throw new IllegalStateException("Already exist");
+//                }
+//            }else if (idx == -1){
+//                idx = i;
+//            }
+//        }
+//        array[idx] = r;
 
+       for (int i = 0; i < LIMIT; i++ ){
+            if (array[i] == null){
+                array[i] = r;
+            }
+        }
     }
 
     @Override
-    public void update(Resume r, Integer index) {
-        array[index] = r;
+    public void update(Resume r) {
+        for (int i = 0; i < LIMIT; i++ ){
+            if (array[i].getUuid().equals(r.getUuid())) {
+                array[i] = r;
+            }
+            else System.out.println("Not Resume exist");
+        }
     }
 
     @Override

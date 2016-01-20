@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface IStorage {
     void clean();
     void save(Resume r);
-    void update(Resume r, Integer index);
+    void update(Resume r);
     Resume load(String uuid);
     void delete(String uuid);
     Collection<Resume> getAllSorted();
