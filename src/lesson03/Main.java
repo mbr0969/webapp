@@ -19,6 +19,7 @@ public class Main {
         System.out.println(link instanceof Link);
 
         StringBuffer fill = new StringBuffer();
+        //StringBilder fill1 = new StringBilder();
         for (int i = 0; i< 100; i++){
             fill.append("a");
         }
