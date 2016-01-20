@@ -22,7 +22,12 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void save(Resume r) {
-        array[size++] = r;
+        if (size==0){
+            array[0] = r;
+        }
+        else {
+            array[size++] = r;
+        }
 
     }
 
@@ -33,6 +38,11 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) {
+       for(int i = 0; i <size();i++){
+         if(array[i].getUuid().equals(uuid)) {
+             return array[i];
+         }
+        }
         return null;
     }
 

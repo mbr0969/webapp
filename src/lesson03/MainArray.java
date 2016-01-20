@@ -10,6 +10,7 @@ public class MainArray {
         int[] array = new int[]{1,2,3};
         System.out.println(array.length);
         System.out.println(array.getClass());
+        System.out.println(array[0]);
 
         Resume[] resumes = new Resume[10];
         System.out.println(resumes.length);
