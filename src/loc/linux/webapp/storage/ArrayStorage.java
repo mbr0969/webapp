@@ -11,13 +11,13 @@ import java.util.Collection;
 public class ArrayStorage implements IStorage {
     private static final int LIMIT = 100;
     private Resume[] array = new Resume[LIMIT];
-    private int size = 0;
+    private int size;
     int index = 0;
 
 
     @Override
     public void clean() {
-        Arrays.fill(array,null);
+        Arrays.fill(array, null);
         size = 0;
     }
 
@@ -36,35 +36,36 @@ public class ArrayStorage implements IStorage {
 //        }
 //        array[idx] = r;
 
-       for (int i = 0; i < LIMIT; i++ ){
-            if (array[i] == null){
+        for (int i = 0; i < LIMIT; i++) {
+            if (array[i] == null) {
                 array[i] = r;
-            }
+                }
         }
+        array[size++] = r;
     }
 
     @Override
     public void update(Resume r) {
-        for (int i = 0; i < LIMIT; i++ ){
+        for (int i = 0; i < LIMIT; i++) {
             if (array[i].getUuid().equals(r.getUuid())) {
                 array[i] = r;
-            }
-            else System.out.println("Not Resume exist");
+            } else System.out.println("Not Resume exist");
         }
     }
 
     @Override
     public Resume load(String uuid) {
-       for(int i = 0; i <size();i++){
-         if(array[i].getUuid().equals(uuid)) {
-             return array[i];
-         }
+        for (int i = 0; i < size(); i++) {
+            if (array[i].getUuid().equals(uuid)) {
+                return array[i];
+            }
         }
         return null;
     }
 
     @Override
     public void delete(String uuid) {
+
 
     }
 
@@ -75,7 +76,6 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public int size() {
-        size = array.length;
         return size;
     }
 }

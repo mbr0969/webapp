@@ -48,6 +48,7 @@ public class ArrayStorageTest {
 
     @org.junit.Test
     public void testSave() throws Exception {
+        Assert.assertEquals(R1.getUuid(),R1.getUuid());
 
     }
 
