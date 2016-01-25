@@ -1,5 +1,8 @@
 package loc.linux.webapp.storage;
 
+import java.lang.String;
+
+import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.Resume;
 
 import java.util.Collection;
@@ -9,10 +12,11 @@ import java.util.Collection;
  */
 public interface IStorage {
     void clean();
-    void save(Resume r);
+    void save(Resume r) throws WebAppExeption;
     void update(Resume r);
-    Resume load(String uuid);
     void delete(String uuid);
+    Resume load(String uuid);
+
     Collection<Resume> getAllSorted();
     int size();
 }
