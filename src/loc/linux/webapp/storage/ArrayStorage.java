@@ -32,7 +32,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void save(Resume r) {
-        LOGGER.info("Save resome  with UUID: " + r.getUuid());
+        LOGGER.info("Save resume  with UUID: " + r.getUuid());
         int idx = getIndex(r.getUuid());
 
 /*         if (idx != -1){
@@ -43,9 +43,8 @@ public class ArrayStorage implements IStorage {
                 throw new IllegalStateException(e);
             }*/
 
-        if (idx != -1) throw new WebAppExeption("Resume " + r.getUuid() + "alredy exist", r);
+        if (idx != -1) throw new WebAppExeption("Resume " + r.getUuid() + "already exist", r);
         array[size++] = r;
-
     }
 
 
@@ -53,7 +52,7 @@ public class ArrayStorage implements IStorage {
     public void update(Resume r) {
         LOGGER.info("Update resume with " + r.getUuid());
         int idx = getIndex(r.getUuid());
-        if (idx != -1 ) throw new WebAppExeption("Resume " + r.getUuid() + "not exist", r);
+        if (idx == -1 ) throw new WebAppExeption("Resume " + r.getUuid() + "not exist", r);
         array[idx] = r;
 
     }
@@ -62,7 +61,7 @@ public class ArrayStorage implements IStorage {
     public Resume load(String uuid) {
         LOGGER.info("Load resume with UUID " + uuid);
         int idx = getIndex(uuid);
-        if (idx != -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
+        if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
         return array[idx];
     }
 
@@ -70,7 +69,7 @@ public class ArrayStorage implements IStorage {
     public void delete(String uuid) {
         LOGGER.info("Delete resume with UUID " + uuid);
         int idx = getIndex(uuid);
-        if (idx != -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
+        if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
 
         int numMoved = size - idx - 1;
         if (numMoved > 0)

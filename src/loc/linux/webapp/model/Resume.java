@@ -1,13 +1,11 @@
 package loc.linux.webapp.model;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by papa on 19.01.16.
  */
-public class Resume {
+public class Resume implements Comparable<Resume>{
     private String uuid;
     private String fullName;
     private String location;
@@ -15,9 +13,9 @@ public class Resume {
     List<Contact> contacts = new LinkedList<>();
     List<Section> sections = new LinkedList<>();
 
-//Конструкторы класса Resume-------------
+    //Конструкторы класса Resume-------------
     public Resume(String fullName, String location) {
-        this(UUID.randomUUID().toString(),fullName,location);
+        this(UUID.randomUUID().toString(), fullName, location);
     }
 
     public Resume(String uuid, String fullName, String location) {
@@ -27,12 +25,12 @@ public class Resume {
     }
 //-------------------------------------------------
 
-//-------------Add Contacts and section-------------
-public void addContact(Contact cantact){
+    //-------------Add Contacts and section-------------
+    public void addContact(Contact cantact) {
         contacts.add(cantact);
     }
 
-    void addSection(Section section){
+    void addSection(Section section) {
         sections.add(section);
     }
 //--------------------------------------------------
@@ -66,22 +64,50 @@ public void addContact(Contact cantact){
 
 //-------------------------------
 
+// ----------Setters
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setHomePage(String homePage) {
+        this.homePage = homePage;
+    }
+
+
 // перорпеделение метдов equals и hashCode для класса Resume/
+
+//------------------------------------------
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Resume resume = (Resume) o;
-
-        return uuid.equals(resume.uuid);
-
+        return Objects.equals(uuid, resume.uuid) &&
+                Objects.equals(fullName, resume.fullName) &&
+                Objects.equals(location, resume.location) &&
+                Objects.equals(homePage, resume.homePage) &&
+                Objects.equals(contacts, resume.contacts) &&
+                Objects.equals(sections, resume.sections);
     }
 
     @Override
     public int hashCode() {
-        return uuid.hashCode();
+        return Objects.hash(uuid, fullName, location, homePage, contacts, sections);
+    }
+
+    @Override
+    public int compareTo(Resume o) {
+        return fullName.compareTo(o.fullName);
     }
 }
-//------------------------------------------
-
