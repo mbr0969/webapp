@@ -14,9 +14,6 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by papa on 20.01.2016.
- */
 public class ArrayStorageTest {
     private Resume R1,R2,R3;
     private ArrayStorage storage = new ArrayStorage();
