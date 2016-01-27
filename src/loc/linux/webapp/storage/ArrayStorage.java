@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 /**
  * Created by papa on 20.01.2016.
  */
-public class ArrayStorage implements IStorage {
+public class ArrayStorage extends AbstractStorage{
     private static final int LIMIT = 100;
     //    protected Logger LOGGER = Logger.getLogger(getClass().getName());
-    private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
+  //  private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
 
     private Resume[] array = new Resume[LIMIT];
     private int size = 0;
@@ -24,15 +24,13 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void clean() {
-        LOGGER.info("Delete all resume");
+        logger.info("Delete all resume");
         Arrays.fill(array, null);
         size = 0;
     }
 
-
     @Override
-    public void save(Resume r) {
-        LOGGER.info("Save resume  with UUID: " + r.getUuid());
+    protected void doSave(Resume r) {
         int idx = getIndex(r.getUuid());
 
 /*         if (idx != -1){
@@ -47,10 +45,9 @@ public class ArrayStorage implements IStorage {
         array[size++] = r;
     }
 
-
     @Override
     public void update(Resume r) {
-        LOGGER.info("Update resume with " + r.getUuid());
+        logger.info("Update resume with " + r.getUuid());
         int idx = getIndex(r.getUuid());
         if (idx == -1 ) throw new WebAppExeption("Resume " + r.getUuid() + "not exist", r);
         array[idx] = r;
@@ -59,7 +56,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) {
-        LOGGER.info("Load resume with UUID " + uuid);
+        logger.info("Load resume with UUID " + uuid);
         int idx = getIndex(uuid);
         if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
         return array[idx];
@@ -67,7 +64,7 @@ public class ArrayStorage implements IStorage {
 
     @Override
     public void delete(String uuid) {
-        LOGGER.info("Delete resume with UUID " + uuid);
+        logger.info("Delete resume with UUID " + uuid);
         int idx = getIndex(uuid);
         if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
 
