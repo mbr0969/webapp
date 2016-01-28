@@ -5,8 +5,8 @@ import java.util.*;
 /**
  * Created by papa on 19.01.16.
  */
-public class Resume implements Comparable<Resume>{
-    private String uuid;
+public class Resume implements Comparable<Resume> {
+    private final String uuid;
     private String fullName;
     private String location;
     private String homePage;
@@ -66,10 +66,6 @@ public class Resume implements Comparable<Resume>{
 
 // ----------Setters
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
@@ -89,21 +85,20 @@ public class Resume implements Comparable<Resume>{
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.uuid) &&
-                Objects.equals(fullName, resume.fullName) &&
-                Objects.equals(location, resume.location) &&
-                Objects.equals(homePage, resume.homePage) &&
-                Objects.equals(contacts, resume.contacts) &&
-                Objects.equals(sections, resume.sections);
+    public int hashCode() {
+        return uuid.hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(uuid, fullName, location, homePage, contacts, sections);
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Resume other = (Resume) obj;
+        return uuid.equals(other.uuid);
     }
 
     @Override

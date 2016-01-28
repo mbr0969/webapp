@@ -9,7 +9,7 @@ import java.util.List;
 public class Organization {
     private  String name;
     private Link link;
-    List<OrganizationPeriod> periods;
+    List<Period> periods;
     List<String> position;
 
     public Organization(String name, Link link) {
@@ -20,4 +20,21 @@ public class Organization {
     public String getName() {
         return name;
     }
+//Внутренний класс период работы в оргнаицации
+    public static class Period {
+        private Date StartDate;
+        private Date EndDate;
+        private String position;
+        private String content;
+
+    public Period() {
+    }
+
+    public Period(Date startDate, Date endDate, String position, String content) {
+        StartDate = startDate;
+        EndDate = endDate;
+        this.position = position;
+        this.content = content;
+    }
+}
 }
