@@ -1,21 +1,16 @@
 package loc.linux.webapp.storage;
 
-import  java.lang.String;
+import java.lang.String;
 
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.Resume;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Logger;
+import java.util.List;
 
-/**
- * Created by papa on 20.01.2016.
- */
-public class ArrayStorage extends AbstractStorage{
+
+public class ArrayStorage extends AbstractStorage {
     private static final int LIMIT = 100;
-    //    protected Logger LOGGER = Logger.getLogger(getClass().getName());
-  //  private static Logger LOGGER = Logger.getLogger(ArrayStorage.class.getName());
 
     private Resume[] array = new Resume[LIMIT];
     private int size = 0;
@@ -23,63 +18,46 @@ public class ArrayStorage extends AbstractStorage{
 
 
     @Override
-    public void clean() {
-        logger.info("Delete all resume");
+    protected void doClear() {
         Arrays.fill(array, null);
         size = 0;
     }
 
     @Override
-    protected void doSave(Resume r) {
-        int idx = getIndex(r.getUuid());
-
-/*         if (idx != -1){
-              try {
-                throw new WebAppExeption("Resume " + r.getUuid() + "alredy exist", r);
-            } catch (WebAppExeption e) {
-                LOGGER.log(Level.SEVERE, e.getMessage(),e);
-                throw new IllegalStateException(e);
-            }*/
-
-        if (idx != -1) throw new WebAppExeption("Resume " + r.getUuid() + "already exist", r);
-        array[size++] = r;
+    protected boolean exist(String uuid) {
+        return getIndex(uuid) != -1;
     }
 
     @Override
-    public void update(Resume r) {
-        logger.info("Update resume with " + r.getUuid());
+    protected void doUpdate(Resume r) {
         int idx = getIndex(r.getUuid());
-        if (idx == -1 ) throw new WebAppExeption("Resume " + r.getUuid() + "not exist", r);
+        if (idx == -1) throw new WebAppExeption("Resume " + r.getUuid() + " not exist");
         array[idx] = r;
-
     }
 
     @Override
-    public Resume load(String uuid) {
-        logger.info("Load resume with UUID " + uuid);
+    protected Resume doLoad(String uuid) {
         int idx = getIndex(uuid);
-        if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
+        if (idx == -1) throw new WebAppExeption("Resume " + uuid + "not exist");
         return array[idx];
+
     }
 
     @Override
-    public void delete(String uuid) {
-        logger.info("Delete resume with UUID " + uuid);
+    protected void doDelete(String uuid) {
         int idx = getIndex(uuid);
-        if (idx == -1 ) throw new WebAppExeption("Resume " + uuid + "not exist");
-
+        if (idx == -1) throw new WebAppExeption("Resume " + uuid + "not exist");
         int numMoved = size - idx - 1;
         if (numMoved > 0)
-         System.arraycopy(array, idx+1, array, idx, numMoved);
+            System.arraycopy(array, idx + 1, array, idx, numMoved);
         array[--size] = null; // clear to let GC do its work
-
-
     }
 
     @Override
-    public Collection<Resume> getAllSorted() {
-        Arrays.sort(array,0,size);
-        return Arrays.asList(Arrays.copyOf(array,size));
+    protected void doSave(Resume r) {
+//        int idx = getIndex(r.getUuid());
+
+       array[size++] = r;
     }
 
     @Override
@@ -88,14 +66,19 @@ public class ArrayStorage extends AbstractStorage{
     }
 
     //поиск в массиве резюме нужного элемента возварзщаем индекс массива
-    public int getIndex(String uuid){
-        for (int i =0; i< LIMIT;i++) {
-            if(array[i] != null){
-               if (array[i].getUuid().equals(uuid)){
-                   return i;
-               }
+    public int getIndex(String uuid) {
+        for (int i = 0; i < LIMIT; i++) {
+            if (array[i] != null) {
+                if (array[i].getUuid().equals(uuid)) {
+                    return i;
+                }
             }
         }
         return -1;
+    }
+
+   @Override
+    protected List<Resume> doGetAll() {
+        return Arrays.asList(Arrays.copyOf(array, size));
     }
 }

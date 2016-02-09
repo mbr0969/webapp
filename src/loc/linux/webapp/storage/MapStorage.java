@@ -2,46 +2,49 @@ package loc.linux.webapp.storage;
 
 import loc.linux.webapp.model.Resume;
 
-import java.util.Collection;
+import java.util.*;
 
-/**
- * Created by papa on 28.01.2016.
- */
-public class MapStorage extends AbstractStorage{
+public class MapStorage extends AbstractStorage {
 
+    private Map<String, Resume> MAP = new HashMap<>();
+
+    @Override
+    protected void doClear() {
+        MAP.clear();
+    }
+
+    @Override
+    protected boolean exist(String uuid) {
+        return MAP.containsKey(uuid);
+    }
 
     @Override
     protected void doSave(Resume r) {
-
+        MAP.put(r.getUuid(), r);
     }
 
     @Override
-    public void clean() {
-
+    public void doUpdate(Resume r) {
+        MAP.put(r.getUuid(), r);
     }
 
     @Override
-    public void update(Resume r) {
-
+    public Resume doLoad(String uuid) {
+        return MAP.get(uuid);
     }
 
     @Override
-    public void delete(String uuid) {
-
+    public void doDelete(String uuid) {
+        MAP.remove(uuid);
     }
 
     @Override
-    public Resume load(String uuid) {
-        return null;
-    }
-
-    @Override
-    public Collection<Resume> getAllSorted() {
-        return null;
+    public List<Resume> doGetAll() {
+        return new ArrayList<>(MAP.values());
     }
 
     @Override
     public int size() {
-        return 0;
+        return MAP.size();
     }
 }

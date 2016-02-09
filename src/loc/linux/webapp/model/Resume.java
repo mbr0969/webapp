@@ -6,7 +6,7 @@ import java.util.*;
  * Created by papa on 19.01.16.
  */
 public class Resume implements Comparable<Resume> {
-    private final String uuid;
+    private String uuid;
     private String fullName;
     private String location;
     private String homePage;
@@ -23,6 +23,8 @@ public class Resume implements Comparable<Resume> {
         this.fullName = fullName;
         this.location = location;
     }
+
+    public Resume() {   }
 //-------------------------------------------------
 
     //-------------Add Contacts and section-------------

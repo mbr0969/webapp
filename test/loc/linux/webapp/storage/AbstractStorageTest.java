@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by papa on 28.01.2016.
  */
-abstract public class AbstractStorageTest{
-    private Resume R1,R2,R3;
+abstract public class AbstractStorageTest {
+    private Resume R1, R2, R3;
     protected IStorage storage;
 
     /*static {
@@ -35,35 +35,37 @@ abstract public class AbstractStorageTest{
     }*/
 
     @BeforeClass
-    public static void beforeClass(){
+    public static void beforeClass() {
 
     }
+
     @Before
-    public void before(){
-        R1 = new Resume("Mikle Brednew","Russia");
-        R1.addContact(new Contact(ContactType.MAIL,"mal@linux.ru"));
-        R1.addContact(new Contact(ContactType.PHONE,"7710118"));
-        R2 = new Resume("Cenia Grigoriev","Russia");
-        R2.addContact(new Contact(ContactType.MAIL,"mal@linux.ru"));
-        R2.addContact(new Contact(ContactType.PHONE,"7710118"));
-        R3 = new Resume("Masha Brednewa","Russia");
-        R3.addContact(new Contact(ContactType.MAIL,"mal@linux.ru"));
-        R3.addContact(new Contact(ContactType.PHONE,"7710118"));
-        storage.clean();
+    public void before() {
+        R1 = new Resume("Mikle Brednew", "Russia");
+        R1.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
+        R1.addContact(new Contact(ContactType.PHONE, "7710118"));
+        R2 = new Resume("Cenia Grigoriev", "Russia");
+        R2.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
+        R2.addContact(new Contact(ContactType.PHONE, "7710118"));
+        R3 = new Resume("Masha Brednewa", "Russia");
+        R3.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
+        R3.addContact(new Contact(ContactType.PHONE, "7710118"));
+        storage.clear();
         storage.save(R2);
         storage.save(R1);
         storage.save(R3);
+
     }
 
     @Test
-    public void testClean() throws Exception {
-        storage.clean();
-        assertEquals(0,storage.size());
+    public void testClear() throws Exception {
+        storage.clear();
+        assertEquals(0, storage.size());
     }
 
     @Test
     public void testSave() throws Exception {
-        Assert.assertEquals(R1.getUuid(),R1.getUuid());
+        Assert.assertEquals(R1.getUuid(), R1.getUuid());
 
     }
 
@@ -72,8 +74,6 @@ abstract public class AbstractStorageTest{
         R2.setFullName("Update Name2");
         storage.update(R2);
         assertEquals(R2, storage.load(R2.getUuid()));
-
-
     }
 
     @Test
@@ -84,25 +84,42 @@ abstract public class AbstractStorageTest{
     }
 
     @Test(expected = WebAppExeption.class)
-    public void testDeleteNotFound(){
-        storage.load("Mama");
+    public void testDeleteNotFound() {
+        storage.delete("Mama");
     }
+
     @Test
     public void testDelete() throws Exception {
         storage.delete(R1.getUuid());
-        Assert.assertEquals(2,storage.size());
+        Assert.assertEquals(2, storage.size());
 
     }
 
     @Test
     public void testGetAllSorted() throws Exception {
-        Resume src[] = new Resume[]{R1,R2,R3};
+        Resume src[] = new Resume[]{R1, R2, R3};
         Arrays.sort(src);
-        assertArrayEquals(src,storage.getAllSorted().toArray());
+        assertArrayEquals(src, storage.getAllSorted().toArray());
     }
 
     @Test
     public void testSize() throws Exception {
-        Assert.assertEquals(3,storage.size());
+        Assert.assertEquals(3, storage.size());
+    }
+
+    @Test(expected = WebAppExeption.class)
+    public void testDeleteMissed() throws Exception {
+        storage.delete("dummy");
+    }
+
+    @Test(expected = WebAppExeption.class)
+    public void testSavePresented() throws Exception {
+        storage.save(R1);
+    }
+
+    @Test(expected = WebAppExeption.class)
+    public void testUpdateMissed() throws Exception {
+        Resume resume = new Resume("dummy", "fullName_U1", "location_U1");
+        storage.update(resume);
     }
 }

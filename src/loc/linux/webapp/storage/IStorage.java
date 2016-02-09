@@ -11,12 +11,12 @@ import java.util.Collection;
  * Created by papa on 20.01.2016.
  */
 public interface IStorage {
-    void clean();
+    void clear();
     void save(Resume r) throws WebAppExeption;
     void update(Resume r);
     void delete(String uuid);
     Resume load(String uuid);
-
     Collection<Resume> getAllSorted();
+    boolean isSectionSupported();
     int size();
 }
