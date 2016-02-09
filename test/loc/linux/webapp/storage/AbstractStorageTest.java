@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.*;
 
 import java.util.Arrays;
 
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by papa on 28.01.2016.
  */
-public class AbstractStorageTest {
+abstract public class AbstractStorageTest{
     private Resume R1,R2,R3;
     protected IStorage storage;
 
@@ -48,6 +49,7 @@ public class AbstractStorageTest {
         R3 = new Resume("Masha Brednewa","Russia");
         R3.addContact(new Contact(ContactType.MAIL,"mal@linux.ru"));
         R3.addContact(new Contact(ContactType.PHONE,"7710118"));
+        storage.clean();
         storage.save(R2);
         storage.save(R1);
         storage.save(R3);
