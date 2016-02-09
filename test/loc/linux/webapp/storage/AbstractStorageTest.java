@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class AbstractStorageTest {
     private Resume R1,R2,R3;
-    private ArrayStorage storage = new ArrayStorage();
+    protected IStorage storage;
 
     /*static {
         R1 = new Resume("Mikle Brednew","Russia");
