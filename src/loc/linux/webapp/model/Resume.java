@@ -10,7 +10,7 @@ public class Resume   { //implements Comparable<Resume>
     private String fullName;
     private String location;
     private String homePage;
-    List<Contact> contacts = new LinkedList<>();
+    Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     List<Section> sections = new LinkedList<>();
 
     //Конструкторы класса Resume-------------
@@ -28,8 +28,10 @@ public class Resume   { //implements Comparable<Resume>
 //-------------------------------------------------
 
     //-------------Add Contacts and section-------------
-    public void addContact(Contact cantact) {
-        contacts.add(cantact);
+    public void addContact(ContactType type,  String value) { contacts.put(type, value);
+    }
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
     void addSection(Section section) {
@@ -42,23 +44,15 @@ public class Resume   { //implements Comparable<Resume>
     public String getUuid() {
         return uuid;
     }
-
     public String getFullName() {
         return fullName;
     }
-
     public String getLocation() {
         return location;
     }
-
     public String getHomePage() {
         return homePage;
     }
-
-    public List<Contact> getContacts() {
-        return contacts;
-    }
-
     public List<Section> getSections() {
         return sections;
     }
@@ -107,4 +101,13 @@ public class Resume   { //implements Comparable<Resume>
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
     }
+
+    /*private String getEmail(List<Contact> list) {
+        for (Contact c: list ) {
+            if (c.getType() == ContactType.MAIL){
+                c.getValue();
+            }
+        }
+*/
+
 }

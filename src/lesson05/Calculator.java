@@ -16,14 +16,15 @@ public class Calculator {
         int result = calc.abc(value);
         System.out.println(result);
 
-
-        System.out.println(new Comparator<Resume>() {
+        Comparator<Resume> comparator = new Comparator<Resume>() {
             @Override
-            public int compare(Resume o1, Resume o2){
-                System.out.println(this.getClass().getName());
+            public int compare(Resume o1, Resume o2) {
+                System.out.printf(this.getClass().getSimpleName());
                 return 0;
             }
-        });
+        };
+
+        System.out.println(comparator);
     }
 
 }

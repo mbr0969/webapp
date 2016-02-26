@@ -1,14 +1,12 @@
 package loc.linux.webapp.storage;
 
 import loc.linux.webapp.WebAppExeption;
-import loc.linux.webapp.model.Contact;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,14 +43,14 @@ abstract public class AbstractStorageTest {
     @Before
     public void before() {
         R1 = new Resume("Mikle Brednew", "Russia");
-        R1.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
-        R1.addContact(new Contact(ContactType.PHONE, "7710118"));
+        R1.addContact(ContactType.MAIL, "mal@linux.ru");
+        R1.addContact(ContactType.PHONE, "7710118");
         R2 = new Resume("Cenia Grigoriev", "Russia");
-        R2.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
-        R2.addContact(new Contact(ContactType.PHONE, "7710118"));
+        R2.addContact(ContactType.MAIL, "mal@linux.ru");
+        R2.addContact(ContactType.PHONE, "7710118");
         R3 = new Resume("Masha Brednewa", "Russia");
-        R3.addContact(new Contact(ContactType.MAIL, "mal@linux.ru"));
-        R3.addContact(new Contact(ContactType.PHONE, "7710118"));
+        R3.addContact(ContactType.MAIL, "mal@linux.ru");
+        R3.addContact(ContactType.PHONE, "7710118");
         storage.clear();
         storage.save(R2);
         storage.save(R1);
