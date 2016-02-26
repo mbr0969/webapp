@@ -11,6 +11,9 @@ import org.junit.Test;
 import org.junit.*;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -97,9 +100,18 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void testGetAllSorted() throws Exception {
-        Resume src[] = new Resume[]{R1, R2, R3};
-        Arrays.sort(src);
-        assertArrayEquals(src, storage.getAllSorted().toArray());
+//        Resume src[] = new Resume[]{R1, R2, R3};
+//        Arrays.sort(src);
+//        assertArrayEquals(src, storage.getAllSorted().toArray());
+        List<Resume> list = Arrays.asList(R1, R2, R3);
+        Collections.sort(list, new Comparator<Resume>() {
+            @Override
+            public int compare(Resume o1, Resume o2) {
+                return 0;
+            }
+        });
+        assertEquals(list, storage.getAllSorted());
+
     }
 
     @Test

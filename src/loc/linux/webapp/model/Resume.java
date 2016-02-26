@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Created by papa on 19.01.16.
  */
-public class Resume implements Comparable<Resume> {
+public class Resume   { //implements Comparable<Resume>
     private String uuid;
     private String fullName;
     private String location;
@@ -103,7 +103,7 @@ public class Resume implements Comparable<Resume> {
         return uuid.equals(other.uuid);
     }
 
-    @Override
+ //   @Override
     public int compareTo(Resume o) {
         return fullName.compareTo(o.fullName);
     }
