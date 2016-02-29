@@ -3,17 +3,14 @@ package loc.linux.webapp.storage;
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -98,18 +95,19 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void testGetAllSorted() throws Exception {
-//        Resume src[] = new Resume[]{R1, R2, R3};
+//        Resume[] src = new Resume[]{R1, R2, R3};
 //        Arrays.sort(src);
 //        assertArrayEquals(src, storage.getAllSorted().toArray());
         List<Resume> list = Arrays.asList(R1, R2, R3);
         Collections.sort(list, new Comparator<Resume>() {
             @Override
             public int compare(Resume o1, Resume o2) {
-                return 0;
+                int cmp = o1.getFullName().compareTo(o2.getFullName());
+                if (cmp != 0) return cmp;
+                return o1.getUuid().compareTo(o2.getUuid());
             }
         });
-        assertEquals(list, storage.getAllSorted());
-
+        assertEquals(list, new ArrayList<>(storage.getAllSorted()));
     }
 
     @Test

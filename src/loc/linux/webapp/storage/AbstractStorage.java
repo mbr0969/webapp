@@ -1,7 +1,6 @@
 package loc.linux.webapp.storage;
 
 import loc.linux.webapp.*;
-import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
 
 import java.util.*;
@@ -63,6 +62,7 @@ abstract public class AbstractStorage implements IStorage {
     public Collection<Resume> getAllSorted() {
         logger.info("getAllSorted");
         List<Resume> list = doGetAll();
+
         Collections.sort(list, new Comparator<Resume>() {
             @Override
             public int compare(Resume o1, Resume o2) {
@@ -71,6 +71,12 @@ abstract public class AbstractStorage implements IStorage {
                 return o1.getUuid().compareTo(o2.getUuid());
             }
         });
+      /* Collections.sort(list, (Resume o1, Resume o2) -> {
+
+            int cmp = o1.getFullName().compareTo(o2.getFullName());
+            if (cmp != 0) return cmp;
+            return o1.getUuid().compareTo(o2.getUuid());
+        });*/
         return list;
     }
 
