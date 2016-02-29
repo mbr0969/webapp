@@ -6,18 +6,19 @@ import loc.linux.webapp.model.Resume;
 import java.util.*;
 import java.util.logging.Logger;
 
-abstract public class AbstractStorage implements IStorage {
+abstract public class AbstractStorage<C> implements IStorage {
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
-    protected abstract void doDelete(String uuid);
+    protected abstract void doDelete(C ctx, String uuid);
 
-    protected abstract boolean exist(String uuid);
+    protected abstract C getContext(String uuid);
+    protected abstract boolean exist(C ctx);
 
-    protected abstract void doSave(Resume r);
+    protected abstract void doSave(C ctx, Resume r);
 
-    protected abstract Resume doLoad(String uuid);
+    protected abstract Resume doLoad(C ctx, String uuid);
 
-    protected abstract void doUpdate(Resume r);
+    protected abstract void doUpdate(C ctx, Resume r);
 
     protected abstract void doClear();
 
@@ -31,31 +32,37 @@ abstract public class AbstractStorage implements IStorage {
     @Override
     public void save(Resume r) {
         logger.info("Save resume with uuid =   " + r.getUuid());
-        if (exist(r.getUuid())) throw new WebAppExeption("Resume " + r.getUuid() + " already exist");
-        doSave(r);
+        C ctx =getContext(r);
+        if (exist(ctx)) {
+            throw new WebAppExeption("Resume " + r.getUuid() + " already exist");
+        }
+        doSave(ctx,r);
     }
 
     @Override
     public void update(Resume r) {
         logger.info("Update resume with uuid = " + r.getUuid());
-        if (!exist(r.getUuid())) throw new WebAppExeption("Resume " + r.getUuid() + " not exist", r.getUuid());
-        doUpdate(r);
+        C ctx =getContext(r.getUuid());
+        if (!exist(ctx)) throw new WebAppExeption("Resume " + r.getUuid() + " not exist", r.getUuid());
+        doUpdate(ctx,r);
     }
 
 
     @Override
     public Resume load(String uuid) {
         logger.info("Load resume with uuid=" + uuid);
-        if (!exist(uuid)) throw new WebAppExeption("Resume " + uuid + " not exist", uuid);
-        return doLoad(uuid);
+        C ctx =getContext(uuid);
+        if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ", uuid);
+        return doLoad(ctx, uuid);
     }
 
 
     @Override
     public void delete(String uuid) {
         logger.info("Delete resume with uuid = " + uuid);
-        if (!exist(uuid)) throw new WebAppExeption("Resume " + uuid + "not exist");
-        doDelete(uuid);
+        C ctx =getContext(uuid);
+        if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ");
+        doDelete(ctx, uuid);
     }
 
     @Override
@@ -88,4 +95,8 @@ abstract public class AbstractStorage implements IStorage {
     protected abstract List<Resume> doGetAll();
 
     public abstract int size();
+
+    private C getContext(Resume r){
+        return getContext(r.getUuid());
+    }
 }
