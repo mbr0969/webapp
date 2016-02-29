@@ -30,7 +30,6 @@ public class ArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doUpdate(Integer idx, Resume r) {
-        if (idx == -1) throw new WebAppExeption("Resume " + r.getUuid() + " not exist");
         array[idx] = r;
     }
 
