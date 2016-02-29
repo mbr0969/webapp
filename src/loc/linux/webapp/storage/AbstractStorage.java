@@ -9,14 +9,14 @@ import java.util.logging.Logger;
 abstract public class AbstractStorage<C> implements IStorage {
     protected final Logger logger = Logger.getLogger(getClass().getName());
 
-    protected abstract void doDelete(C ctx, String uuid);
+    protected abstract void doDelete(C ctx);
 
     protected abstract C getContext(String uuid);
     protected abstract boolean exist(C ctx);
 
     protected abstract void doSave(C ctx, Resume r);
 
-    protected abstract Resume doLoad(C ctx, String uuid);
+    protected abstract Resume doLoad(C ctx);
 
     protected abstract void doUpdate(C ctx, Resume r);
 
@@ -53,7 +53,7 @@ abstract public class AbstractStorage<C> implements IStorage {
         logger.info("Load resume with uuid=" + uuid);
         C ctx =getContext(uuid);
         if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ", uuid);
-        return doLoad(ctx, uuid);
+        return doLoad(ctx);
     }
 
 
@@ -62,7 +62,7 @@ abstract public class AbstractStorage<C> implements IStorage {
         logger.info("Delete resume with uuid = " + uuid);
         C ctx =getContext(uuid);
         if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ");
-        doDelete(ctx, uuid);
+        doDelete(ctx);
     }
 
     @Override
