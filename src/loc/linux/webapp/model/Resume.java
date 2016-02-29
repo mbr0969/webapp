@@ -11,7 +11,7 @@ public class Resume   { //implements Comparable<Resume>
     private String location;
     private String homePage;
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-    List<Section> sections = new LinkedList<>();
+    Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     //Конструкторы класса Resume-------------
     public Resume(String fullName, String location) {
@@ -34,8 +34,8 @@ public class Resume   { //implements Comparable<Resume>
         return contacts.get(type);
     }
 
-    void addSection(Section section) {
-        sections.add(section);
+    void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 //--------------------------------------------------
 
@@ -53,8 +53,8 @@ public class Resume   { //implements Comparable<Resume>
     public String getHomePage() {
         return homePage;
     }
-    public List<Section> getSections() {
-        return sections;
+    public Section getSections(SectionType type) {
+        return sections.get(type);
     }
 
 

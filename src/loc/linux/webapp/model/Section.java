@@ -5,6 +5,6 @@ package loc.linux.webapp.model;
  */
 public class Section {
 //данные класа Section
-    protected SectionType type;
+  //  protected SectionType type;
 
 }

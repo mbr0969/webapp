@@ -4,46 +4,51 @@ import loc.linux.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapStorage{// extends AbstractStorage {
+public class MapStorage extends AbstractStorage<String> {
 
     private Map<String, Resume> MAP = new HashMap<>();
 
-   // @Override
+    @Override
+    protected String getContext(String uuid) {
+        return uuid;
+    }
+
+    @Override
     protected void doClear() {
         MAP.clear();
     }
 
-   // @Override
+    @Override
     protected boolean exist(String uuid) {
         return MAP.containsKey(uuid);
     }
 
-   // @Override
-    protected void doSave(Resume r) {
+    @Override
+    protected void doSave(String uuid, Resume r) {
         MAP.put(r.getUuid(), r);
     }
 
-   // @Override
-    public void doUpdate(Resume r) {
+    @Override
+    public void doUpdate(String uuid, Resume r) {
         MAP.put(r.getUuid(), r);
     }
 
-   // @Override
+    @Override
     public Resume doLoad(String uuid) {
         return MAP.get(uuid);
     }
 
-   // @Override
+    @Override
     public void doDelete(String uuid) {
         MAP.remove(uuid);
     }
 
-   // @Override
+    @Override
     public List<Resume> doGetAll() {
         return new ArrayList<>(MAP.values());
     }
 
-   // @Override
+    @Override
     public int size() {
         return MAP.size();
     }
