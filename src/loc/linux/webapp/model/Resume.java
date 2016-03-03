@@ -13,6 +13,13 @@ public class Resume   { //implements Comparable<Resume>
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
+    public static final Resume EMPTY;
+
+    static {
+        EMPTY = new Resume();
+        for (SectionType type : SectionType.values());
+    }
+
     //Конструкторы класса Resume-------------
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
