@@ -52,9 +52,6 @@ public class FileStorage extends AbstractStorage<File> {
 
     }
 
-
-
-
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
@@ -81,7 +78,9 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return 0;
+        String[] list =dir.list();
+        if (list == null) throw new WebAppExeption("Couldn't read directory " + dir.getAbsolutePath());
+        return dir.list().length;
     }
 
     protected void write(File file, Resume r) {
@@ -89,7 +88,9 @@ public class FileStorage extends AbstractStorage<File> {
             dos.writeUTF(r.getFullName());
             dos.writeUTF(r.getLocation());
             dos.writeUTF(r.getHomePage());
-            for (Map.Entry<ContactType, String> entry : r.getContacts().entrySet()) {
+            Map<ContactType, String> contacts = r.getContacts();
+            dos.writeInt(contacts.size());
+            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
                 dos.writeInt(entry.getKey().ordinal());
                 dos.writeUTF(entry.getValue());
             }
@@ -106,6 +107,13 @@ public class FileStorage extends AbstractStorage<File> {
         Resume r = new Resume();
         try (InputStream is = new FileInputStream(file); DataInputStream dis = new DataInputStream(is)){
                 r.setFullName(dis.readUTF());
+                r.setLocation(dis.readUTF());
+                r.setHomePage(dis.readUTF());
+                int contactsSize = dis.readInt();
+            for (int i = 0; i< contactsSize;i++){
+                r.addContact(ContactType.VALUES[dis.readInt()], dis.readUTF());
+            }
+
         }catch (IOException e){
             throw new WebAppExeption("Couldn't read file " + file.getAbsolutePath(),e);
         }
