@@ -1,6 +1,8 @@
 package loc.linux.webapp.model;
 
-public enum ContactType {
+import java.io.Serializable;
+
+public enum ContactType implements Serializable{
     PHONE("Тел."),
     MOBILE("Мобильный:"),
     HOME_PHONE("Домашний."),
