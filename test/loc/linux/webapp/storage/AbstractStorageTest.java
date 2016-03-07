@@ -4,6 +4,7 @@ import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
 
+import loc.linux.webapp.model.SectionType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -52,6 +53,9 @@ abstract public class AbstractStorageTest {
         storage.save(R2);
         storage.save(R1);
         storage.save(R3);
+//        R1.addObjective("Objective1");
+//        R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
+//        R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
 
     }
 
@@ -102,9 +106,7 @@ abstract public class AbstractStorageTest {
         Collections.sort(list, new Comparator<Resume>() {
             @Override
             public int compare(Resume o1, Resume o2) {
-                int cmp = o1.getFullName().compareTo(o2.getFullName());
-                if (cmp != 0) return cmp;
-                return o1.getUuid().compareTo(o2.getUuid());
+                return 0;
             }
         });
         assertEquals(list, new ArrayList<>(storage.getAllSorted()));

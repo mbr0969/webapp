@@ -85,6 +85,9 @@ public class Resume implements Serializable {
 
 // ----------Setters
 
+
+    public void setUuid(String uuid) {this.uuid = uuid;}
+
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }

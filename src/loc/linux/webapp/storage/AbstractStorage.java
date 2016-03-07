@@ -69,7 +69,6 @@ abstract public class AbstractStorage<C> implements IStorage {
     public Collection<Resume> getAllSorted() {
         logger.info("getAllSorted");
         List<Resume> list = doGetAll();
-
         Collections.sort(list, new Comparator<Resume>() {
             @Override
             public int compare(Resume o1, Resume o2) {
@@ -78,12 +77,14 @@ abstract public class AbstractStorage<C> implements IStorage {
                 return o1.getUuid().compareTo(o2.getUuid());
             }
         });
-      /* Collections.sort(list, (Resume o1, Resume o2) -> {
-
+/*
+        Collections.sort(list, (Resume o1, Resume o2) -> {
             int cmp = o1.getFullName().compareTo(o2.getFullName());
             if (cmp != 0) return cmp;
             return o1.getUuid().compareTo(o2.getUuid());
-        });*/
+        });
+        return Collections.singletonList(new Resume());
+*/
         return list;
     }
 

@@ -12,47 +12,57 @@ import java.util.Map;
 
 
 public class DataStreamFileStorage extends FileStorage {
+    private static final String NULL= "null";
 
     public DataStreamFileStorage(String path) {
         super(path);
     }
-
-
-    protected void write(File file, Resume r) {
-        try (FileOutputStream fos = new FileOutputStream(file); DataOutputStream dos = new DataOutputStream(fos);){
-            dos.writeUTF(r.getFullName());
-            dos.writeUTF(r.getLocation());
-            dos.writeUTF(r.getHomePage());
-            Map<ContactType, String> contacts = r.getContacts();
+    @Override
+    protected void write(OutputStream os, Resume resume) throws IOException {
+        try (final DataOutputStream dos = new DataOutputStream(os)){
+            writeString(dos, resume.getFullName());
+            writeString(dos, resume.getLocation());
+            writeString(dos, resume.getHomePage());
+            Map<ContactType, String> contacts = resume.getContacts();
             dos.writeInt(contacts.size());
             for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
                 dos.writeInt(entry.getKey().ordinal());
-                dos.writeUTF(entry.getValue());
+                writeString(dos,entry.getValue());
             }
-            for (Map.Entry<SectionType, Section> entry : r.getSections().entrySet()) {
-                dos.writeInt(entry.getKey().ordinal());
-                dos.writeUTF(entry.toString());
+            Map<SectionType, Section> sections = resume.getSections();
+           for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+                SectionType type = entry.getKey();
+                Section section = entry.getValue();
+                writeString(dos, type.name());
             }
-        }catch (IOException e){
-            throw new WebAppExeption("Could't create file " + file.getAbsolutePath(), r,e);
+
         }
     }
 
-    protected Resume read(File file){
+    @Override
+    protected Resume read(InputStream is) throws IOException {
         Resume r = new Resume();
-        try (InputStream is = new FileInputStream(file); DataInputStream dis = new DataInputStream(is)){
-            r.setFullName(dis.readUTF());
-            r.setLocation(dis.readUTF());
-            r.setHomePage(dis.readUTF());
+        try (DataInputStream dis = new DataInputStream(is)){
+            r.setUuid(dis.readUTF());
+            r.setFullName(readString(dis));
+            r.setLocation(readString(dis));
+            r.setHomePage(readString(dis));
             int contactsSize = dis.readInt();
             for (int i = 0; i< contactsSize;i++){
-                r.addContact(ContactType.VALUES[dis.readInt()], dis.readUTF());
+                r.addContact(ContactType.VALUES[dis.readInt()], readString(dis));
             }
 
-        }catch (IOException e){
-            throw new WebAppExeption("Couldn't read file " + file.getAbsolutePath(),e);
         }
-        return null;
+        return r;
+    }
+
+    private void writeString(DataOutputStream dos, String str ) throws IOException{
+        dos.writeUTF(str == null ? NULL : str );
+    }
+
+    private String readString(DataInputStream dis) throws  IOException{
+        String str = dis.readUTF();
+        return str.equals(NULL) ? null : str;
     }
 
 }
