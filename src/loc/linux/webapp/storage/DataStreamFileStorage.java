@@ -35,7 +35,6 @@ public class DataStreamFileStorage extends FileStorage {
                 Section section = entry.getValue();
                 writeString(dos, type.name());
             }
-
         }
     }
 
