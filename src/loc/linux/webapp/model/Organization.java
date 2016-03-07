@@ -7,6 +7,7 @@ import java.util.List;
  * Created by papa on 19.01.16.
  */
 public class Organization {
+    static final long serialVersionUID = 1L;
     private String name;
     private Link link;
     List<Period> periods;

@@ -1,8 +1,5 @@
 package loc.linux.webapp.model;
 
-/**
- * Created by papa on 19.01.2016.
- */
 public enum ContactType {
     PHONE("Тел."),
     MOBILE("Мобильный:"),
