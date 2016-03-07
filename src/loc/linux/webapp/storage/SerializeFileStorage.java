@@ -10,10 +10,10 @@ import java.io.*;
 import java.util.Map;
 
 
-public class SerialazeFileStorage extends FileStorage {
+public class SerializeFileStorage extends FileStorage {
 
 
-    public SerialazeFileStorage(String path) {
+    public SerializeFileStorage(String path) {
         super(path);
     }
 
