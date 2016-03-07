@@ -109,7 +109,9 @@ public class Resume implements Serializable {
             return false;
         }
         final Resume other = (Resume) obj;
-        return uuid.equals(other.uuid);
+        return Objects.equals(this.uuid, other.uuid) && Objects.equals(this.fullName,other.fullName)
+                && Objects.equals(this.location,other.location) && Objects.equals(this.homePage,other.homePage)
+                && Objects.equals(this.contacts,other.contacts) && Objects.equals(this.sections,other.sections);
     }
 
  //   @Override
