@@ -88,7 +88,7 @@ public abstract class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected List<Resume> doGetAll() {
+   public List<Resume> doGetAll() {
         File[] files = dir.listFiles();
         if (files == null) return Collections.emptyList();
         List<Resume> list = new ArrayList<>(files.length);

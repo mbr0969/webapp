@@ -72,7 +72,11 @@ abstract public class AbstractStorage<C> implements IStorage {
     public Collection<Resume> getAllSorted() throws IOException {
         logger.info("getAllSorted");
         List<Resume> list = doGetAll();
-        Collections.sort(list, (o1, o2) -> o1.getFullName().compareTo(o2.getFullName())) ;
+        Collections.sort(list, (Resume o1, Resume o2) -> {
+            int cmp = o1.getFullName().compareTo(o2.getFullName());
+            if (cmp != 0) return cmp;
+            return o1.getUuid().compareTo(o2.getUuid());
+        });
 
 /*
         Collections.sort(list, (Resume o1, Resume o2) -> {

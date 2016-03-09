@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Created by papa on 19.01.16.
  */
-public class Resume implements Comparable<Resume>,Serializable {// Comparable<Resume>,
+public class Resume implements Serializable {// Comparable<Resume>,
     static final long serialVersionUID = 1L;
     private String uuid;
     private String fullName;

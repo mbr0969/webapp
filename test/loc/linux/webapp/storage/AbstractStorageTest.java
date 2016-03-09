@@ -102,14 +102,11 @@ abstract public class AbstractStorageTest {
         assertArrayEquals(src, storage.getAllSorted().toArray());
     */
       List<Resume> list = Arrays.asList(R1, R2,R3);
-        //Collections.sort(list);
-        Collections.sort(list);
-       /* Collections.sort(list, new Comparator<Resume>() {
-            @Override
-            public int compare(Resume o1, Resume o2) {
-                return 0;
-            }
-        });*/
+       //Collections.sort(list);
+        Collections.sort(list, (Resume o1, Resume o2) -> o1.getFullName().compareTo(o2.getFullName()));//new Comparator<Resume>() {
+
+
+      //  assertEquals(list, new ArrayList<>(storage.getAllSorted()));
         assertEquals(list, storage.getAllSorted());
     }
 
