@@ -41,20 +41,20 @@ public class DataStreamFileStorage extends FileStorage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                                  writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos,value));
+                             writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos,value));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        writeCollection(dos, ((OrganizationSection) section).getValues(), (org) -> {
-                            dos.writeUTF(org.getLink().getName());
-                            dos.writeUTF(org.getLink().getUrl());
-                            writeCollection(dos, org.getPeriods(), period -> {
-                                DataStreamFileStorage.this.writeLocalDate(dos, period.getStartDate());
-                                DataStreamFileStorage.this.writeLocalDate(dos, period.getEndDate());
-                                dos.writeUTF(period.getPosition());
-                                dos.writeUTF(period.getContent());
-                            });
-                        });
+//                        writeCollection(dos, ((OrganizationSection) section).getValues(), (org) -> {
+//                            dos.writeUTF(org.getLink().getName());
+//                            dos.writeUTF(org.getLink().getUrl());
+//                            writeCollection(dos, org.getPeriods(), period -> {
+//                                DataStreamFileStorage.this.writeLocalDate(dos, period.getStartDate());
+//                                DataStreamFileStorage.this.writeLocalDate(dos, period.getEndDate());
+//                                dos.writeUTF(period.getPosition());
+//                                dos.writeUTF(period.getContent());
+//                            });
+//                        });
                         break;
                 }
             }
