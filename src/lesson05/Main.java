@@ -3,10 +3,7 @@ package lesson05;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created by Tata on 27.02.2016.

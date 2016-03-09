@@ -3,8 +3,6 @@ package loc.linux.webapp.storage;
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
-
-import loc.linux.webapp.model.SectionType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -40,13 +38,13 @@ abstract public class AbstractStorageTest {
 
     @Before
     public void before() {
-        R1 = new Resume("Mikle Brednew", "Russia");
+        R1 = new Resume("Masha Brednewa", "Russia");
         R1.addContact(ContactType.MAIL, "mal@linux.ru");
         R1.addContact(ContactType.PHONE, "7710118");
-        R2 = new Resume("Cenia Grigoriev", "Russia");
+        R2 = new Resume("Mikle Brednew", "Russia");
         R2.addContact(ContactType.MAIL, "mal@linux.ru");
         R2.addContact(ContactType.PHONE, "7710118");
-        R3 = new Resume("Masha Brednewa", "Russia");
+        R3 = new Resume("Cenia Grigoriev", "Russia");
         R3.addContact(ContactType.MAIL, "mal@linux.ru");
         R3.addContact(ContactType.PHONE, "7710118");
         storage.clear();
@@ -99,17 +97,20 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void testGetAllSorted() throws Exception {
-//        Resume[] src = new Resume[]{R1, R2, R3};
-//        Arrays.sort(src);
-//        assertArrayEquals(src, storage.getAllSorted().toArray());
-        List<Resume> list = Arrays.asList(R1, R2, R3);
-        Collections.sort(list, new Comparator<Resume>() {
+     /*   Resume[] src = new Resume[]{R1, R2, R3};
+        Arrays.sort(src);
+        assertArrayEquals(src, storage.getAllSorted().toArray());
+    */
+      List<Resume> list = Arrays.asList(R1, R2,R3);
+        //Collections.sort(list);
+        Collections.sort(list);
+       /* Collections.sort(list, new Comparator<Resume>() {
             @Override
             public int compare(Resume o1, Resume o2) {
                 return 0;
             }
-        });
-        assertEquals(list, new ArrayList<>(storage.getAllSorted()));
+        });*/
+        assertEquals(list, storage.getAllSorted());
     }
 
     @Test

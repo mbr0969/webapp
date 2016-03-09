@@ -1,9 +1,12 @@
 package loc.linux.webapp.storage;
 
-import loc.linux.webapp.*;
+import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.Resume;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Logger;
 
 abstract public class AbstractStorage<C> implements IStorage {
@@ -16,7 +19,7 @@ abstract public class AbstractStorage<C> implements IStorage {
 
     protected abstract void doSave(C ctx, Resume r);
 
-    protected abstract Resume doLoad(C ctx);
+    protected abstract Resume doLoad(C ctx) throws IOException;
 
     protected abstract void doUpdate(C ctx, Resume r);
 
@@ -49,7 +52,7 @@ abstract public class AbstractStorage<C> implements IStorage {
 
 
     @Override
-    public Resume load(String uuid) {
+    public Resume load(String uuid) throws IOException {
         logger.info("Load resume with uuid=" + uuid);
         C ctx =getContext(uuid);
         if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ", uuid);
@@ -66,26 +69,23 @@ abstract public class AbstractStorage<C> implements IStorage {
     }
 
     @Override
-    public Collection<Resume> getAllSorted() {
+    public Collection<Resume> getAllSorted() throws IOException {
         logger.info("getAllSorted");
         List<Resume> list = doGetAll();
-        Collections.sort(list, new Comparator<Resume>() {
-            @Override
-            public int compare(Resume o1, Resume o2) {
-                int cmp = o1.getFullName().compareTo(o2.getFullName());
-                if (cmp != 0) return cmp;
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
-        });
+        Collections.sort(list, (o1, o2) -> o1.getFullName().compareTo(o2.getFullName())) ;
+
 /*
         Collections.sort(list, (Resume o1, Resume o2) -> {
             int cmp = o1.getFullName().compareTo(o2.getFullName());
             if (cmp != 0) return cmp;
             return o1.getUuid().compareTo(o2.getUuid());
-        });
-        return Collections.singletonList(new Resume());
-*/
-        return list;
+        });*/
+     //   return Collections.singletonList(new Resume());
+
+       // List<Resume> list = doGetAll();
+      // Collections.sort(list);
+
+     return list;
     }
 
     @Override
@@ -93,7 +93,7 @@ abstract public class AbstractStorage<C> implements IStorage {
         return true;
     }
 
-    protected abstract List<Resume> doGetAll();
+    protected abstract List<Resume> doGetAll() throws IOException;
 
     public abstract int size();
 

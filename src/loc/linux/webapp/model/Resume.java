@@ -1,12 +1,15 @@
 package loc.linux.webapp.model;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Created by papa on 19.01.16.
  */
-public class Resume implements Serializable {
+public class Resume implements Comparable<Resume>,Serializable {// Comparable<Resume>,
     static final long serialVersionUID = 1L;
     private String uuid;
     private String fullName;
@@ -23,6 +26,7 @@ public class Resume implements Serializable {
     }
 
     //Конструкторы класса Resume-------------
+    public Resume() {   }
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
     }
@@ -33,15 +37,13 @@ public class Resume implements Serializable {
         this.location = location;
     }
 
-    public Resume() {   }
+
 //-------------------------------------------------
 
     //-------------Add Contacts and section-------------
     public void addContact(ContactType type,  String value) { contacts.put(type, value);
     }
-    public String getContact(ContactType type) {
-        return contacts.get(type);
-    }
+
 
     void addSection(SectionType type, Section section) {
         sections.put(type, section);
@@ -72,6 +74,9 @@ public class Resume implements Serializable {
     }
     public Section getSections(SectionType type) {
         return sections.get(type);
+    }
+    public String getContact(ContactType type) {
+        return contacts.get(type);
     }
 
     public Map<ContactType, String> getContacts() {
@@ -120,10 +125,11 @@ public class Resume implements Serializable {
             return false;
         }
         final Resume other = (Resume) obj;
-        return Objects.equals(this.uuid, other.uuid) && Objects.equals(this.fullName,other.fullName)
-                && Objects.equals(this.location,other.location) && Objects.equals(this.homePage,other.homePage)
-                && Objects.equals(this.contacts,other.contacts) && Objects.equals(this.sections,other.sections);
+        return Objects.equals(this.uuid, other.uuid);// && Objects.equals(this.fullName, other.fullName);
+                //&& Objects.equals(this.location, other.location) && Objects.equals(this.homePage, other.homePage)
+               // && Objects.equals(this.contacts, other.contacts) && Objects.equals(this.sections, other.sections);
     }
+
 
  //   @Override
     public int compareTo(Resume o) {

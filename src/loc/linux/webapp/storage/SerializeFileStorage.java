@@ -1,23 +1,17 @@
 package loc.linux.webapp.storage;
 
 import loc.linux.webapp.WebAppExeption;
-import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
-import loc.linux.webapp.model.Section;
-import loc.linux.webapp.model.SectionType;
 
 import java.io.*;
-import java.util.Map;
-
 
 public class SerializeFileStorage extends FileStorage {
-
 
     public SerializeFileStorage(String path) {
         super(path);
     }
 
-
+    @Override
     protected void write(OutputStream os, Resume r) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
             oos.writeObject(r);

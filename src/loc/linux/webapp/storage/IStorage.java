@@ -1,10 +1,9 @@
 package loc.linux.webapp.storage;
 
-import java.lang.String;
-
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.Resume;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -15,8 +14,8 @@ public interface IStorage {
     void save(Resume r) throws WebAppExeption;
     void update(Resume r);
     void delete(String uuid);
-    Resume load(String uuid);
-    Collection<Resume> getAllSorted();
+    Resume load(String uuid) throws IOException;
+    Collection<Resume> getAllSorted() throws IOException;
     boolean isSectionSupported();
     int size();
 }

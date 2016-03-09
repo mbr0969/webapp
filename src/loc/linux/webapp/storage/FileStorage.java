@@ -1,16 +1,17 @@
 package loc.linux.webapp.storage;
 
 import loc.linux.webapp.WebAppExeption;
-import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
-import loc.linux.webapp.model.Section;
-import loc.linux.webapp.model.SectionType;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-
+/**
+ * GKislin
+ * 23.01.2015.
+ */
 public abstract class FileStorage extends AbstractStorage<File> {
     private File dir;
 
@@ -41,48 +42,15 @@ public abstract class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doSave(File file, Resume r) {
-        try{
-            file.createNewFile();
-            write(file, r);
-
-        }catch (IOException e){
-            throw new WebAppExeption("Could't create file " + file.getAbsolutePath(), r,e);
+        try {
+            if(!file.createNewFile()){
+                throw new WebAppExeption("Couldn't create file " + file.getAbsolutePath(), r);
+            }
+        } catch (IOException e) {
+            throw new WebAppExeption("Couldn't create file " + file.getAbsolutePath(), r, e);
         }
         write(file, r);
-
     }
-
-    @Override
-    protected void doDelete(File file) {
-        if (!file.delete()) {
-            throw new WebAppExeption("File " + file.getAbsolutePath() + " can not be deleted");
-        }
-    }
-
-    @Override
-    protected Resume doLoad(File file) {
-        return read(file);
-
-    }
-
-    @Override
-    protected void doUpdate(File file, Resume r) {
-        write(file, r);
-
-    }
-
-    @Override
-    protected List<Resume> doGetAll() {
-        return null;
-    }
-
-    @Override
-    public int size() {
-        String[] list =dir.list();
-        if (list == null) throw new WebAppExeption("Couldn't read directory " + dir.getAbsolutePath());
-        return dir.list().length;
-    }
-
 
     protected void write(File file, Resume r) {
         try {
@@ -100,8 +68,38 @@ public abstract class FileStorage extends AbstractStorage<File> {
         }
     }
 
-
     abstract protected void write(OutputStream os, Resume r) throws IOException;
 
     abstract protected Resume read(InputStream is) throws IOException;
+
+    @Override
+    protected void doUpdate(File file, Resume r) {
+        write(file, r);
+    }
+
+    @Override
+    protected Resume doLoad(File file) {
+        return read(file);
+    }
+
+    @Override
+    protected void doDelete(File file) {
+        if (!file.delete()) throw new WebAppExeption("File " + file.getAbsolutePath() + " can not be deleted");
+    }
+
+    @Override
+    protected List<Resume> doGetAll() {
+        File[] files = dir.listFiles();
+        if (files == null) return Collections.emptyList();
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) list.add(read(file));
+        return list;
+    }
+
+    @Override
+    public int size() {
+        String[] list = dir.list();
+        if (list == null) throw new WebAppExeption("Couldn't read directory " + dir.getAbsolutePath());
+        return list.length;
+    }
 }
