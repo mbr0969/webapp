@@ -55,7 +55,7 @@ public class DataStreamFileStorage extends FileStorage {
 //                                dos.writeUTF(period.getContent());
 //                            });
 //                        });
-                        break;
+                       break;
                 }
             }
         } catch (IOException e) {
