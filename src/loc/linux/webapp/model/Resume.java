@@ -45,7 +45,7 @@ public class Resume implements Serializable {// Comparable<Resume>,
     }
 
 
-    void addSection(SectionType type, Section section) {
+    public void addSection(SectionType type, Section section) {
         sections.put(type, section);
     }
 
@@ -146,6 +146,12 @@ public class Resume implements Serializable {// Comparable<Resume>,
 
     @Override
     public String toString() {
-        return "fullName= " + fullName + ", uuid= " + uuid ;
+        return "Resume {"
+                + "uuid= " + uuid  + '\'' +
+                ", FullName " + fullName + '\''+
+                ", location " + location + '\''+
+                ", homePage " + homePage + '\''+
+                ", Contacts " + contacts + '\''+
+                ", Section " + sections + '\'';
     }
 }

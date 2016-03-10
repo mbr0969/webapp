@@ -3,6 +3,7 @@ package loc.linux.webapp.storage;
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
+import loc.linux.webapp.model.SectionType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -47,13 +48,13 @@ abstract public class AbstractStorageTest {
         R3 = new Resume("Cenia Grigoriev", "Russia");
         R3.addContact(ContactType.MAIL, "mal@linux.ru");
         R3.addContact(ContactType.PHONE, "7710118");
+        R1.addObjective("Objective1");
+        R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
+        R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
         storage.clear();
         storage.save(R2);
         storage.save(R1);
         storage.save(R3);
-//        R1.addObjective("Objective1");
-//        R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
-//        R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
 
     }
 

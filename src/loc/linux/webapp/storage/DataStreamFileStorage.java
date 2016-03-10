@@ -75,7 +75,7 @@ public class DataStreamFileStorage extends FileStorage {
             for (int i = 0; i < contactsSize; i++) {
                 r.addContact(ContactType.VALUES[dis.readInt()], readString(dis));
             }
-        /*    final int sectionsSize = dis.readInt();
+            final int sectionsSize = dis.readInt();
             for (int i = 0; i < sectionsSize; i++) {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
@@ -84,19 +84,20 @@ public class DataStreamFileStorage extends FileStorage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.addSection(sectionType,
-                                new MultiTextSection(readList(dis, dis::readUTF)));
+                        r.addSection(sectionType, new MultiTextSection(readList(dis, () -> readString(dis))));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
-                        r.addSection(sectionType,
-                                new OrganizationSection(readList(dis, () -> new Organization(new Link(dis.readUTF(), dis.readUTF()),
-                                        readList(dis, () -> new Organization.Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()))))));
+//                        r.addSection(sectionType,
+//                                new OrganizationSection(readList(dis, () -> new Organization(new Link(dis.readUTF(), dis.readUTF()),
+//                                        readList(dis, () -> new Organization.Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF()))))));
                         break;
-        */
+//
+                }
+            }
+            return r;
         }
-        //         }
-        return r;
+
     }
 
     private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
