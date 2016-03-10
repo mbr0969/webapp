@@ -1,9 +1,11 @@
 package loc.linux.webapp.model;
 
+import java.io.Serializable;
+
 /**
  * Created by papa on 19.01.16.
  */
-public class Link {
+public class Link implements Serializable{
     static final long serialVersionUID = 1L;
 //данные класса Link
     private static Link EMPTY = new Link();

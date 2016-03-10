@@ -49,8 +49,9 @@ abstract public class AbstractStorageTest {
         R3.addContact(ContactType.MAIL, "mal@linux.ru");
         R3.addContact(ContactType.PHONE, "7710118");
         R1.addObjective("Objective1");
-        R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
-        R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
+        R2.addObjective("Objective1");
+   //     R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
+  //      R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
         storage.clear();
         storage.save(R2);
         storage.save(R1);
