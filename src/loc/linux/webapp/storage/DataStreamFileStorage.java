@@ -29,7 +29,7 @@ public class DataStreamFileStorage extends FileStorage {
 
             });
 
-             Map<SectionType, Section> sections = resume.getSections();
+            Map<SectionType, Section> sections = resume.getSections();
             dos.writeInt(sections.size());
             for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
                 SectionType type = entry.getKey();
@@ -37,11 +37,11 @@ public class DataStreamFileStorage extends FileStorage {
                 dos.writeUTF(type.name());
                 switch (type) {
                     case OBJECTIVE:
-                        writeString(dos,((TextSection) section).getValue());
+                        writeString(dos, ((TextSection) section).getValue());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                             writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos,value));
+                        writeCollection(dos, ((MultiTextSection) section).getValues(), value -> writeString(dos, value));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
@@ -55,11 +55,9 @@ public class DataStreamFileStorage extends FileStorage {
 //                                dos.writeUTF(period.getContent());
 //                            });
 //                        });
-                       break;
+                        break;
                 }
             }
-        } catch (IOException e) {
-            throw new WebAppExeption("Could not not write file " + os.getClass(), resume, e);
         }
     }
 
@@ -95,9 +93,9 @@ public class DataStreamFileStorage extends FileStorage {
 //
                 }
             }
-            return r;
-        }
 
+        }
+        return r;
     }
 
     private void writeLocalDate(DataOutputStream dos, LocalDate ld) throws IOException {
