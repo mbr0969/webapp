@@ -6,9 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Created by papa on 19.01.16.
- */
 public class Resume implements Serializable {// Comparable<Resume>,
     static final long serialVersionUID = 1L;
     private String uuid;
@@ -24,7 +21,6 @@ public class Resume implements Serializable {// Comparable<Resume>,
         EMPTY = new Resume();
         for (SectionType type : SectionType.values());
     }
-
     //Конструкторы класса Resume-------------
     public Resume() {   }
     public Resume(String fullName, String location) {

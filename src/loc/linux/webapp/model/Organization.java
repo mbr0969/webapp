@@ -1,13 +1,11 @@
 package loc.linux.webapp.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by papa on 19.01.16.
- */
 public class Organization implements Serializable {
     static final long serialVersionUID = 1L;
     private String name;
@@ -53,18 +51,24 @@ public class Organization implements Serializable {
 
 
     //Внутренний класс период работы в оргнаицации
+
+
     public static class Period {
-        private Date StartDate;
-        private Date EndDate;
+        private LocalDate StartDate;
+        private LocalDate EndDate;
         private String position;
         private String content;
 
         public Period() {
         }
 
-        public Period(Date startDate, Date endDate, String position, String content) {
-            StartDate = startDate;
-            EndDate = endDate;
+        public Period(int startYear, Month startMonth, int endYear, Month endMonth, String position, String content){
+            this(LocalDate.of(startYear, startMonth,1), LocalDate.of(endYear,endMonth,1),position,content);
+        }
+
+        public Period(LocalDate startDate, LocalDate endDate, String position, String content) {
+            this.StartDate = startDate;
+            this.EndDate = endDate;
             this.position = position;
             this.content = content;
             //link.getName();
