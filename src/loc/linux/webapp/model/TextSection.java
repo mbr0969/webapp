@@ -1,16 +1,14 @@
 package loc.linux.webapp.model;
 
-import java.util.Objects;
-
-/**
- * Created by papa on 19.01.2016.
- */
 public class TextSection extends Section {
     static final long serialVersionUID = 1L;
 
 //    private String title;
 //    private String comment;
     private String value;
+
+    public TextSection() {
+    }
 
     public TextSection(String value) {
        this.value = value;

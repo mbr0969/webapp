@@ -9,13 +9,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by papa on 28.01.2016.
- */
+
 abstract public class AbstractStorageTest {
     private Resume R1, R2, R3;
     protected IStorage storage;
@@ -50,8 +50,17 @@ abstract public class AbstractStorageTest {
         R3.addContact(ContactType.PHONE, "7710118");
         R1.addObjective("Objective1");
         R2.addObjective("Objective1");
-   //     R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
-  //      R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
+        R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
+        R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
+       /* R1.addOrganizationSection(SectionType.EXPERIENCE,
+                new Organization("Organization11", null,
+                        new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
+        R1.addOrganizationSection(SectionType.EDUCATION,
+                new Organization("Institute", null,
+                        new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                        new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+                new Organization("Organization12", "http://Organization12.ru"));*/
         storage.clear();
         storage.save(R2);
         storage.save(R1);
@@ -73,7 +82,7 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void testUpdate() throws Exception {
-        R2.setFullName("Update Name2");
+        R2.setFullName("Update Наташа");
         storage.update(R2);
         assertEquals(R2, storage.load(R2.getUuid()));
     }
@@ -87,7 +96,7 @@ abstract public class AbstractStorageTest {
 
     @Test(expected = WebAppExeption.class)
     public void testDeleteNotFound() {
-        storage.delete("Mama");
+        storage.delete("Маша Бреднева");
     }
 
     @Test

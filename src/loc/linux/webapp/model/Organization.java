@@ -1,11 +1,15 @@
 package loc.linux.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     static final long serialVersionUID = 1L;
     private String name;
@@ -14,6 +18,14 @@ public class Organization implements Serializable {
     List<String> position;
 
     public Organization() {
+    }
+
+    public Organization(String name, String url, Period... periods) {
+        this(new Link(name, url), new LinkedList<>(Arrays.asList(periods)));
+    }
+    public Organization(Link link, List<Period> periods) {
+        this.link = link;
+        this.periods = periods;
     }
 
     public Organization(String name, Link link) {
@@ -48,12 +60,12 @@ public class Organization implements Serializable {
                 ", periods=" + periods +
                 '}';
     }
-
-
     //Внутренний класс период работы в оргнаицации
+@XmlAccessorType(XmlAccessType.FIELD)
+    public static class Period implements Serializable{
+        static final long serialVersionUID = 1L;
 
-
-    public static class Period {
+        public static final LocalDate NOW = LocalDate.of(3000,1,1);
         private LocalDate StartDate;
         private LocalDate EndDate;
         private String position;
@@ -74,6 +86,4 @@ public class Organization implements Serializable {
             //link.getName();
         }
     }
-
-
 }

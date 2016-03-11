@@ -1,7 +1,11 @@
 package loc.linux.webapp.storage;
 
-public class MapStorageTest extends AbstractStorageTest {
+/**
+ * Created by papa on 11.03.2016.
+ */
+public class MapStorageTest extends AbstractStorageTest{
     {
         storage = new MapStorage();
     }
+
 }

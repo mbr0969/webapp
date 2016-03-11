@@ -1,13 +1,9 @@
 package loc.linux.webapp.model;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by papa on 19.01.2016.
- */
 public class MultiTextSection extends Section {//implements Serializable {
     static final long serialVersionUID = 1L;
     private List<String> values;
