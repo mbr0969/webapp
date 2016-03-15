@@ -40,9 +40,6 @@ public class Resume implements Serializable {// Comparable<Resume>,
         this.location = location;
     }
 
-
-//-------------------------------------------------
-
     //-------------Add Contacts and section-------------
     public void addContact(ContactType type,  String value) { contacts.put(type, value);
     }
