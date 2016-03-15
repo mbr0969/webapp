@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 
 abstract public class AbstractStorageTest {
+    public static final String FILE_STORAGE = "/windows/Project/Web/webapp/file_storage";
     private Resume R1, R2, R3;
     protected IStorage storage;
 
@@ -144,4 +145,5 @@ abstract public class AbstractStorageTest {
         Resume resume = new Resume("dummy", "fullName_U1", "location_U1");
         storage.update(resume);
     }
+
 }
