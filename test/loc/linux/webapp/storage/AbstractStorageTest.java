@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 
 
 abstract public class AbstractStorageTest {
-    public static final String FILE_STORAGE = "/windows/Project/Web/webapp/file_storage";
+    public static final String FILE_STORAGE = "./file_storage";
     private Resume R1, R2, R3;
     protected IStorage storage;
 
