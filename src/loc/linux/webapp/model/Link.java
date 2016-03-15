@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Link implements Serializable{
     static final long serialVersionUID = 1L;
 //данные класса Link
-    private static Link EMPTY = new Link();
+    static Link EMPTY = new Link();
 
     private final String name;
     private final String url;

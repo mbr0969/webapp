@@ -2,6 +2,7 @@ package loc.linux.webapp.storage;
 
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
+import loc.linux.webapp.model.Organization;
 import loc.linux.webapp.model.Resume;
 import loc.linux.webapp.model.SectionType;
 import org.junit.Assert;
@@ -9,6 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +55,7 @@ abstract public class AbstractStorageTest {
         R2.addObjective("Objective1");
         R1.addMultiTextSection(SectionType.ACHIEVEMENT," Arhivment1", "Arhivment2");
         R1.addMultiTextSection(SectionType.QUALIFICATIONS,"JAVA","SQL");
-       /* R1.addOrganizationSection(SectionType.EXPERIENCE,
+        R1.addOrganizationSection(SectionType.EXPERIENCE,
                 new Organization("Organization11", null,
                         new Organization.Period(LocalDate.of(2005, Month.JANUARY, 1), Organization.Period.NOW, "position1", "content1"),
                         new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2")));
@@ -60,7 +63,7 @@ abstract public class AbstractStorageTest {
                 new Organization("Institute", null,
                         new Organization.Period(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
                         new Organization.Period(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
-                new Organization("Organization12", "http://Organization12.ru"));*/
+                new Organization("Organization12", "http://Organization12.ru"));
         storage.clear();
         storage.save(R2);
         storage.save(R1);

@@ -15,14 +15,14 @@ public class XmlFileStorage extends FileStorage {
     public XmlFileStorage(String path) {
         super(path);
         xmlParser = new XmlParser(Resume.class, Organization.class, Link.class,
-                          OrganizationSection.class, TextSection.class, Organization.Period.class);
+                OrganizationSection.class, TextSection.class, MultiTextSection.class, Organization.Period.class);
     }
 
     @Override
     protected void write(OutputStream os, Resume r) throws IOException {
-                try(Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)){
-                    xmlParser.marshall( r, w);
-                }
+        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            xmlParser.marshall(r, w);
+        }
     }
 
     @Override
