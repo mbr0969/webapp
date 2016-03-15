@@ -14,8 +14,8 @@ public class Resume implements Serializable {// Comparable<Resume>,
     static final long serialVersionUID = 1L;
     private String uuid;
     private String fullName;
-    private String location;
-    private String homePage;
+    private String location = "";
+    private String homePage = "";
     Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
