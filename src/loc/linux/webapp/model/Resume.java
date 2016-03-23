@@ -110,6 +110,12 @@ public class Resume implements Serializable {// Comparable<Resume>,
     }
 
 
+    public void removeContact(ContactType type) {
+        contacts.remove(type);
+    }
+
+
+
 // перорпеделение метдов equals и hashCode для класса Resume/
 
 //------------------------------------------

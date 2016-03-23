@@ -20,11 +20,15 @@ public enum ContactType implements Serializable{
     },
     ICQ("ICQ");
 
-    private String title;
+     private String title;
+     public String getTitle() {
+        return title;
+    }
 
     ContactType(String title) {
         this.title = title;
     }
+
 
     public static ContactType[] VALUES = ContactType.values();
 
