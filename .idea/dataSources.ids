@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="PostgreSQL - base@localhost" uuid="100fbf4e-4536-493e-b71a-634bc26b82de">
+    <database-info product="PostgreSQL" version="9.3.3" jdbc-version="3.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.3 JDBC3g (build 1103)">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/>
+    <database-model serializer="dbm" rdbms="POSTGRES" format-version="2.4">
+      <database id="1" name="base"/>
+      <schema id="2" parent="1" name="public">
+        <object-id>2200</object-id>
+        <comment>standard public schema</comment>
+        <introspection-state-number>686</introspection-state-number>
+        <introspection-timestamp>2016-03-24.21:27:41.033</introspection-timestamp>
+      </schema>
+      <sequence id="3" parent="2" name="contact_id_seq">
+        <object-id>24598</object-id>
+        <state-number>685</state-number>
+      </sequence>
+      <table id="4" parent="2" name="contact">
+        <object-id>24600</object-id>
+        <state-number>685</state-number>
+      </table>
+      <table id="5" parent="2" name="resume">
+        <object-id>24576</object-id>
+        <state-number>685</state-number>
+      </table>
+      <column id="6" parent="4" name="id">
+        <state-number>685</state-number>
+        <mandatory>1</mandatory>
+        <data-type>integer</data-type>
+        <default-expression>nextval(&apos;contact_id_seq&apos;::regclass)</default-expression>
+      </column>
+      <column id="7" parent="4" name="resume_uuid">
+        <state-number>685</state-number>
+        <mandatory>1</mandatory>
+        <data-type>char(36)</data-type>
+      </column>
+      <column id="8" parent="4" name="type">
+        <state-number>685</state-number>
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="9" parent="4" name="value">
+        <state-number>685</state-number>
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <index id="10" parent="4" name="contact_pkey">
+        <object-id>24607</object-id>
+        <columns>id</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <index id="11" parent="4" name="contact_idx">
+        <object-id>24614</object-id>
+        <columns>resume_uuid
+type</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="12" parent="4" name="contact_pkey">
+        <columns>id</columns>
+        <underlying-index>contact_pkey</underlying-index>
+        <primary>1</primary>
+      </key>
+      <foreign-key id="13" parent="4" name="contact_fk">
+        <columns>resume_uuid</columns>
+        <ref-key>~.resume.resume_pkey</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="14" parent="5" name="uuid">
+        <state-number>682</state-number>
+        <mandatory>1</mandatory>
+        <data-type>char(36)</data-type>
+      </column>
+      <column id="15" parent="5" name="full_name">
+        <state-number>682</state-number>
+        <mandatory>1</mandatory>
+        <data-type>text</data-type>
+      </column>
+      <column id="16" parent="5" name="location">
+        <state-number>682</state-number>
+        <data-type>text</data-type>
+      </column>
+      <column id="17" parent="5" name="home_page">
+        <state-number>682</state-number>
+        <data-type>text</data-type>
+      </column>
+      <index id="18" parent="5" name="resume_pkey">
+        <object-id>24582</object-id>
+        <columns>uuid</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <key id="19" parent="5" name="resume_pkey">
+        <columns>uuid</columns>
+        <underlying-index>resume_pkey</underlying-index>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>
