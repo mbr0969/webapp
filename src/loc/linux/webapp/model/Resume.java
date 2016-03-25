@@ -27,14 +27,20 @@ public class Resume implements Serializable {// Comparable<Resume>,
     }
     //Конструкторы класса Resume-------------
     public Resume() {   }
+
     public Resume(String fullName, String location) {
         this(UUID.randomUUID().toString(), fullName, location);
     }
 
     public Resume(String uuid, String fullName, String location) {
-        Objects.requireNonNull(uuid,"uuid is null");
-        Objects.requireNonNull(fullName,"fullName is null");
-        Objects.requireNonNull(location,"location is null");
+        this(uuid, fullName, location, "");
+    }
+
+    public Resume(String uuid, String fullName, String location, String homePage) {
+        Objects.requireNonNull(uuid, "uuid is null");
+        Objects.requireNonNull(fullName, "fullName is null");
+        Objects.requireNonNull(location, "location is null");
+        Objects.requireNonNull(homePage, "homePage is null");
         this.uuid = uuid;
         this.fullName = fullName;
         this.location = location;

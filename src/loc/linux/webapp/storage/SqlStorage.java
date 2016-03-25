@@ -82,18 +82,24 @@ public class SqlStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) throws IOException {
-        return sql.execute("SELECT * FROM resume r WHERE  r.uuid=?", new SqlExecutor<Resume>() {
-            @Override
-            public Resume execute(PreparedStatement ps) throws SQLException {
-                ps.setString(1, uuid);
-                ResultSet rs = ps.executeQuery();
-                if (!rs.next()) {
-                    throw new WebAppExeption("Resume not exist");
-                }
-                Resume r = new Resume(rs.getString("full_name"), rs.getString("location"), rs.getString("home_page"));
-                return r;
-            }
-        });
+        return sql.execute("" +
+                        "SELECT *\n" +
+                        "  FROM resume r\n" +
+                        "  LEFT JOIN contact c ON c.resume_uuid=r.uuid\n" +
+                        " WHERE r.uuid = ?",
+                st -> {
+                    st.setString(1, uuid);
+                    ResultSet rs = st.executeQuery();
+                    if (!rs.next()) {
+                        throw new WebAppExeption("Resume " + uuid + " is not exist");
+                    }
+                    Resume r = new Resume(uuid, rs.getString("full_name"), rs.getString("location"), rs.getString("home_page"));
+                    addContact(rs, r);
+                    while (rs.next()) {
+                        addContact(rs, r);
+                    }
+                    return r;
+                });
     }
 
     @Override
