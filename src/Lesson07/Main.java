@@ -9,6 +9,6 @@ public class Main {
         System.out.println(new Date().getTime());
         System.out.println(System.currentTimeMillis());
         System.out.println(new Date(Long.MAX_VALUE));
-        sldkjf
+
     }
 }
