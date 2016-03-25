@@ -11,11 +11,18 @@ import java.util.Collection;
  */
 public interface IStorage {
     void clear();
+
     void save(Resume r) throws WebAppExeption;
+
     void update(Resume r);
-    void delete(String uuid);
+
     Resume load(String uuid) throws IOException;
+
+    void delete(String uuid);
+
     Collection<Resume> getAllSorted() throws IOException;
-    boolean isSectionSupported();
+
     int size();
+
+    boolean isSectionSupported();
 }

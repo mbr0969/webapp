@@ -51,11 +51,14 @@ abstract public class AbstractStorage<C> implements IStorage {
     }
 
 
+
     @Override
     public Resume load(String uuid) throws IOException {
         logger.info("Load resume with uuid=" + uuid);
-        C ctx =getContext(uuid);
-        if (!exist(ctx) ) throw new WebAppExeption("Resume " + uuid + " not exist ", uuid);
+        C ctx = getContext(uuid);
+        if (!exist(ctx)) {
+            throw new WebAppExeption("Resume " + uuid + " is not exist");
+        }
         return doLoad(ctx);
     }
 
@@ -69,7 +72,7 @@ abstract public class AbstractStorage<C> implements IStorage {
     }
 
     @Override
-    public Collection<Resume> getAllSorted() throws IOException {
+    public  Collection<Resume> getAllSorted() throws IOException {
         logger.info("getAllSorted");
         List<Resume> list = doGetAll();
         Collections.sort(list, (Resume o1, Resume o2) -> {

@@ -4,9 +4,7 @@
     <root id="archive" name="webapp.war">
       <element id="artifact" artifact-name="webapp:Web exploded" />
       <element id="directory" name="WEB-INF">
-        <element id="directory" name="lib">
-          <element id="file-copy" path="$PROJECT_DIR$/lib/jstl.jar" />
-        </element>
+        <element id="directory" name="lib" />
       </element>
     </root>
   </artifact>

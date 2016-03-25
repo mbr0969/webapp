@@ -1,9 +1,8 @@
+<%@ page import="loc.linux.webapp.WebAppConfig" %>
 <%@ page import="loc.linux.webapp.model.ContactType" %>
 <%@ page import="loc.linux.webapp.model.Resume" %>
 <%@ page import="loc.linux.webapp.web.HtmlUtil" %>
 <%@ page import="java.util.Collection" %>
-<%@ page import="loc.linux.webapp.storage.XmlFileStorage" %>
-<%@ page import="loc.linux.webapp.web.ResumeServlet" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -20,7 +19,7 @@
     <table>
         <tr>
             <td colspan="5" style="text-align: right"><a href="resume?action=create"><img src="img/add.png"> Добавить
-                Резюме1</a></td>
+                Резюме</a></td>
         </tr>
         <tr>
             <td>
@@ -33,7 +32,7 @@
                         <th>&nbsp;</th>
                       </tr>
                     <%
-                        Collection<Resume> resumes =  ResumeServlet.storage.getAllSorted();
+                        Collection<Resume> resumes = WebAppConfig.get().getStorage().getAllSorted();
                         request.setAttribute("resumeList", resumes);
                     %>
                     <c:forEach items="${resumeList}" var="resume">

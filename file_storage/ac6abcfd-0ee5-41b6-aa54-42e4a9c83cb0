@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resume>
+    <uuid>ac6abcfd-0ee5-41b6-aa54-42e4a9c83cb0</uuid>
+    <fullName>Cenia Grigoriev</fullName>
+    <location>Russia</location>
+    <homePage></homePage>
+    <contacts>
+        <entry>
+            <key>PHONE</key>
+            <value>7710118</value>
+        </entry>
+        <entry>
+            <key>MAIL</key>
+            <value>mal@linux.ru</value>
+        </entry>
+    </contacts>
+    <sections/>
+</resume>

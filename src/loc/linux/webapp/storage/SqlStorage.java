@@ -1,46 +1,104 @@
 package loc.linux.webapp.storage;
 
 import loc.linux.webapp.WebAppExeption;
+import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
+import loc.linux.webapp.sql.Sql;
+import loc.linux.webapp.sql.SqlExecutor;
+import loc.linux.webapp.sql.SqlTransaction;
+import loc.linux.webapp.util.Util;
 
 import java.io.IOException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Map;
 
-/**
- * Created by papa on 23.03.2016.
- */
 public class SqlStorage implements IStorage {
+    public Sql sql;
 
-    public SqlStorage(String property, String   property1, String property2) {
+    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        sql = new Sql(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
     @Override
     public void clear() {
+        sql.execute("DELETE FROM resume");
 
     }
 
     @Override
-    public void save(Resume r) throws WebAppExeption {
+    public void save(final Resume r) throws WebAppExeption {
 
+        sql.execute((SqlTransaction<Void>) conn -> {
+
+            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name, location," +
+                    " home_page) VALUES(?,?,?,?)")) {
+                ps.setString(1, r.getUuid());
+                ps.setString(2, r.getFullName());
+                ps.setString(3, r.getLocation());
+                ps.setString(4, r.getHomePage());
+                ps.execute();
+                insertContact(conn, r);
+                return null;
+            }
+        });
     }
 
     @Override
     public void update(Resume r) {
 
+        sql.execute(conn -> {
+
+            try (PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name=?, location=?," +
+                    " home_page =? WHERE uuid=?")) {
+                ps.setString(1, r.getFullName());
+                ps.setString(2, r.getLocation());
+                ps.setString(3, r.getHomePage());
+                ps.setString(4, r.getUuid());
+                if (ps.executeUpdate() == 0) {
+                    throw new WebAppExeption("Resume not found", r);
+                }
+            }
+            deleteContacts(conn, r);
+            insertContact(conn, r);
+            return null;
+        });
     }
+
 
     @Override
     public void delete(String uuid) {
+
+        sql.execute("DELETE FROM resume WHERE uuid=?", (SqlExecutor<Void>) ps -> {
+            ps.setString(1, uuid);
+            if (ps.executeUpdate() == 0) {
+                throw new WebAppExeption("Resume " + uuid + "not exist", uuid);
+            }
+            return null;
+        });
 
     }
 
     @Override
     public Resume load(String uuid) throws IOException {
-        return null;
+        return sql.execute("SELECT * FROM resume r WHERE  r.uuid=?", new SqlExecutor<Resume>() {
+            @Override
+            public Resume execute(PreparedStatement ps) throws SQLException {
+                ps.setString(1, uuid);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) {
+                    throw new WebAppExeption("Resume not exist");
+                }
+                Resume r = new Resume(rs.getString("full_name"), rs.getString("location"), rs.getString("home_page"));
+                return r;
+            }
+        });
     }
 
     @Override
     public Collection<Resume> getAllSorted() throws IOException {
+        //SELECT * FROM resume r ORDER BY fullName,uuid
         return null;
     }
 
@@ -51,6 +109,47 @@ public class SqlStorage implements IStorage {
 
     @Override
     public int size() {
-        return 0;
+        return sql.execute("SELECT  count(*) FROM resume", ps -> {
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        });
+    }
+
+    private void addContact(ResultSet rs, Resume r) throws SQLException {
+        String value = rs.getString("value");
+        if (!Util.isEmpty(value)) {
+            ContactType type = ContactType.valueOf(rs.getString("type"));
+            r.addContact(type, value);
+        }
+    }
+
+    private void insertContact(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement st = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
+            for (Map.Entry<ContactType, String> e : r.getContacts().entrySet()) {
+                st.setString(1, r.getUuid());
+                st.setString(2, e.getKey().name());
+                st.setString(3, e.getValue());
+                st.addBatch();
+            }
+            st.executeBatch();
+        }
+    }
+
+    private void deleteContacts(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement st = conn.prepareStatement("DELETE FROM contact WHERE resume_uuid=?")) {
+            st.setString(1, r.getUuid());
+            st.execute();
+        }
+    }
+
+    void insertDate(LocalDate startDate, LocalDate endDate) {
+        sql.execute("INSERT INTO period (start_date, end_date) VALUES (?,?)",
+                st -> {
+                    st.setDate(1, Date.valueOf(startDate));
+                    st.setDate(2, Date.valueOf(endDate));
+                    st.execute();
+                    return null;
+                });
     }
 }

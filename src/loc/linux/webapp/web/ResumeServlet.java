@@ -1,18 +1,22 @@
 package loc.linux.webapp.web;
 
+import loc.linux.webapp.WebAppConfig;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
 import loc.linux.webapp.model.SectionType;
-import loc.linux.webapp.storage.XmlFileStorage;
+import loc.linux.webapp.storage.IStorage;
 import loc.linux.webapp.util.Util;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ResumeServlet extends javax.servlet.http.HttpServlet {
-   public static XmlFileStorage storage = new XmlFileStorage("D:\\Project\\Web\\webapp\\file_storage");
+public class ResumeServlet extends HttpServlet {
+   private IStorage storage;
+  // public static XmlFileStorage storage = new XmlFileStorage("D:\\Project\\Web\\webapp\\file_storage");
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -52,12 +56,17 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
         response.sendRedirect("list");
     }
 
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-
-        String uuid =  request.getParameter("uuid");
-        String action =  request.getParameter("action");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+/*
+        Writer w = response.getWriter();
+        String name = request.getParameter("name");
+        w.write("Тест сервелет: " + name);
+        w.close();
+*/
+        String uuid = request.getParameter("uuid");
+        String action = request.getParameter("action");
         Resume r;
+        IStorage storage = WebAppConfig.get().getStorage();
 
         switch (action) {
             case "delete":
@@ -78,17 +87,11 @@ public class ResumeServlet extends javax.servlet.http.HttpServlet {
         request.getRequestDispatcher(
                 ("view".equals(action) ? "/WEB-INF/jsp/view.jsp" : "/WEB-INF/jsp/edit.jsp")
         ).forward(request, response);
-/*
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html; charset=UTF-8 ");
-        Writer w = response.getWriter();
-        //String name = request.getParameter("name");
-        w.write("Тест, привет. " );
-        w.close();*/
     }
-    /*@Override
+
+   @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        storage = (XmlFileStorage) WebAppConfig.get().getStorage();
-    }*/
+        storage = WebAppConfig.get().getStorage();
+    }
 }
