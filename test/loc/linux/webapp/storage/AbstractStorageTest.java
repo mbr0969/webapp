@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -120,9 +121,15 @@ abstract public class AbstractStorageTest {
        //Collections.sort(list);
         Collections.sort(list, (Resume o1, Resume o2) -> o1.getFullName().compareTo(o2.getFullName()));//new Comparator<Resume>() {
 
+       /* Collection<Resume> resumes = storage.getAllSorted();
+        Iterator<Resume> iterator = resumes.iterator();
+        System.out.println(list.get(0).equals(iterator.next()));
+        System.out.println(list.get(1).equals(iterator.next()));
+        System.out.println(list.get(2).equals(iterator.next()));
+        System.out.println(list.equals(resumes));
+        assertEquals(list, storage.getAllSorted());*/
+        assertEquals(list, new ArrayList<>(storage.getAllSorted()));
 
-      //  assertEquals(list, new ArrayList<>(storage.getAllSorted()));
-        assertEquals(list, storage.getAllSorted());
     }
 
     @Test

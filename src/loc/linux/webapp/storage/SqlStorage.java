@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class SqlStorage implements IStorage {
@@ -104,8 +105,22 @@ public class SqlStorage implements IStorage {
 
     @Override
     public Collection<Resume> getAllSorted() throws IOException {
-        //SELECT * FROM resume r ORDER BY fullName,uuid
-        return null;
+        return sql.execute("SELECT * FROM resume r LEFT JOIN contact c ON r.uuid = c.resume_uuid ORDER BY full_name, uuid",
+                ps -> {
+                    ResultSet rs = ps.executeQuery();
+                    Map<String, Resume> map = new LinkedHashMap<>();
+                    while (rs.next()) {
+                        String uuid = rs.getString("uuid");
+                        Resume resume = map.get(uuid);
+                        if (resume == null) {
+                            resume = new Resume(uuid, rs.getString("full_name"),
+                                    rs.getString("location"), rs.getString("home_page"));
+                            map.put(uuid, resume);
+                        }
+                        addContact(rs, resume);
+                    }
+                    return map.values();
+                });
     }
 
     @Override
