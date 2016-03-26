@@ -1,9 +1,4 @@
 /out/*
 /web/
-webapp.log.0
-webapp.log.1
-webapp.log.2
-webapp.log.3
-webapp.log.4
-webapp.log.5
 webapp.log.*
+webapp.log.0

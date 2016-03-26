@@ -82,7 +82,7 @@ public class Resume implements Serializable {// Comparable<Resume>,
     public String getHomePage() {
         return homePage;
     }
-    public Section getSections(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
     }
     public String getContact(ContactType type) {

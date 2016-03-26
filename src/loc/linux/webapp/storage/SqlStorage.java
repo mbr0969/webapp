@@ -3,6 +3,8 @@ package loc.linux.webapp.storage;
 import loc.linux.webapp.WebAppExeption;
 import loc.linux.webapp.model.ContactType;
 import loc.linux.webapp.model.Resume;
+import loc.linux.webapp.model.Section;
+import loc.linux.webapp.model.SectionType;
 import loc.linux.webapp.sql.Sql;
 import loc.linux.webapp.sql.SqlExecutor;
 import loc.linux.webapp.sql.SqlTransaction;
@@ -42,6 +44,7 @@ public class SqlStorage implements IStorage {
                 ps.setString(4, r.getHomePage());
                 ps.execute();
                 insertContact(conn, r);
+          //      insertSections(conn,r);
                 return null;
             }
         });
@@ -64,6 +67,8 @@ public class SqlStorage implements IStorage {
             }
             deleteContacts(conn, r);
             insertContact(conn, r);
+     //   deleteSections(conn,r);
+      //      insertSections(conn,r);
             return null;
         });
     }
@@ -84,7 +89,15 @@ public class SqlStorage implements IStorage {
 
     @Override
     public Resume load(String uuid) throws IOException {
-        return sql.execute("" +
+        //SELECT * FROM resume r LEFT JOIN contact c ON  c.resume_uuid=r.uuid
+        // LEFT JOIN text_section tc ON r.uuid = tc.resume_uuid
+       // WHERE r.uuid =
+
+        return sql.execute(" " +/*
+                "    SELECT * FROM resume r LEFT JOIN contact c ON  c.resume_uuid=r.uuid " +
+                "     LEFT JOIN text_section tc ON r.uuid = tc.resume_uuid  WHERE r.uuid =?",
+*/
+
                         "SELECT *\n" +
                         "  FROM resume r\n" +
                         "  LEFT JOIN contact c ON c.resume_uuid=r.uuid\n" +
@@ -100,13 +113,19 @@ public class SqlStorage implements IStorage {
                     while (rs.next()) {
                         addContact(rs, r);
                     }
+    /*   *//*             addSection(rs,r);
+                    while (rs.next()){
+                        addSection(rs,r);*//*
+                    }*/
+
                     return r;
                 });
     }
 
     @Override
     public Collection<Resume> getAllSorted() throws IOException {
-        return sql.execute("SELECT * FROM resume r LEFT JOIN contact c ON r.uuid = c.resume_uuid ORDER BY full_name, uuid",
+        return sql.execute("SELECT * FROM resume r LEFT JOIN contact c ON r.uuid = c.resume_uuid  " +
+                "LEFT JOIN text_section tc ON r.uuid = tc.resume_uuid ORDER BY full_name, uuid",
                 ps -> {
                     ResultSet rs = ps.executeQuery();
                     Map<String, Resume> map = new LinkedHashMap<>();
@@ -119,6 +138,7 @@ public class SqlStorage implements IStorage {
                             map.put(uuid, resume);
                         }
                         addContact(rs, resume);
+                //        addSection(rs,resume);
                     }
                     return map.values();
                 });
@@ -146,12 +166,33 @@ public class SqlStorage implements IStorage {
         }
     }
 
+    private void addSection(ResultSet rs, Resume r )throws SQLException{
+        String value = rs.getString("value");
+        if(!Util.isEmpty(value)){
+            SectionType type =SectionType.valueOf(rs.getString("type"));
+            r.addSection(type,type.getHtmlType().createSection(value));
+        }
+
+    }
+
     private void insertContact(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement st = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?,?,?)")) {
             for (Map.Entry<ContactType, String> e : r.getContacts().entrySet()) {
                 st.setString(1, r.getUuid());
                 st.setString(2, e.getKey().name());
                 st.setString(3, e.getValue());
+                st.addBatch();
+            }
+            st.executeBatch();
+        }
+    }
+    private void insertSections(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement st = conn.prepareStatement("INSERT INTO text_section (resume_uuid, type," +
+                " values) VALUES (?,?,?)")) {
+            for (Map.Entry<SectionType, Section> e : r.getSections().entrySet()) {
+                st.setString(1, r.getUuid());
+                st.setString(2, e.getKey().name());
+                st.setString(3, String.valueOf(e.getValue()));
                 st.addBatch();
             }
             st.executeBatch();
@@ -164,12 +205,20 @@ public class SqlStorage implements IStorage {
             st.execute();
         }
     }
+    private void deleteSections(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement st = conn.prepareStatement("DELETE FROM text_section WHERE resume_uuid=?")) {
+            st.setString(1, r.getUuid());
+            st.execute();
+        }
+    }
+
+
 
     void insertDate(LocalDate startDate, LocalDate endDate) {
         sql.execute("INSERT INTO period (start_date, end_date) VALUES (?,?)",
                 st -> {
-                    st.setDate(1, Date.valueOf(startDate));
-                    st.setDate(2, Date.valueOf(endDate));
+                    st.setDate(1, java.sql.Date.valueOf(startDate));
+                    st.setDate(2, java.sql.Date.valueOf(endDate));
                     st.execute();
                     return null;
                 });
