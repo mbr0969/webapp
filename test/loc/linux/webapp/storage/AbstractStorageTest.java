@@ -44,7 +44,7 @@ abstract public class AbstractStorageTest {
 
     @Before
     public void before() {
-        R1 = new Resume("Masha Brednewa", "Russia");
+        R1 = new Resume("Masha Brednewa11", "Russia");
         R1.addContact(ContactType.MAIL, "mal@linux.ru");
         R1.addContact(ContactType.PHONE, "7710118");
         R2 = new Resume("Mikle Brednew", "Russia");

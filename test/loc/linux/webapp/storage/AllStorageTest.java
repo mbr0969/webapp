@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ArrayStorageTest.class,MapStorageTest.class, DataStreamFileStorageTest.class,
-SerializeFileStorageTest.class,XmlFileStorageTest.class,JsonFileStorageTest.class})
+SerializeFileStorageTest.class,XmlFileStorageTest.class,JsonFileStorageTest.class, SqlStorageTest.class})
 public class AllStorageTest extends AbstractStorageTest {
 
 

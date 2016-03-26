@@ -6,12 +6,12 @@ import loc.linux.webapp.storage.SqlStorage;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.LogManager;
-
 /**
  * GKislin
  * 01.02.2015.
  */
 public class WebAppConfig {
+
     private static final WebAppConfig INSTANCE = new WebAppConfig();
 
     private IStorage storage;

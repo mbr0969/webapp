@@ -18,7 +18,8 @@ import java.util.Map;
 public class SqlStorage implements IStorage {
     public Sql sql;
 
-    public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+    public SqlStorage(String dbUrl, String dbUser, String dbPassword) throws ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
         sql = new Sql(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 

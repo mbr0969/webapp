@@ -3,9 +3,8 @@ package loc.linux.webapp.sql;
 
 import loc.linux.webapp.WebAppExeption;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+
 
 public class Sql {
     private final ConnectionFactory connectionFactory;
