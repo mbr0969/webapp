@@ -44,13 +44,13 @@ abstract public class AbstractStorageTest {
 
     @Before
     public void before() {
-        R1 = new Resume("Masha Brednewa11", "Russia");
+        R1 = new Resume("Маша Бреднева", "Russia");
         R1.addContact(ContactType.MAIL, "mal@linux.ru");
         R1.addContact(ContactType.PHONE, "7710118");
-        R2 = new Resume("Mikle Brednew", "Russia");
+        R2 = new Resume("Миша Бреднев", "Russia");
         R2.addContact(ContactType.MAIL, "mal@linux.ru");
         R2.addContact(ContactType.PHONE, "7710118");
-        R3 = new Resume("Cenia Grigoriev", "Russia");
+        R3 = new Resume("Сеня Григорьев", "Russia");
         R3.addContact(ContactType.MAIL, "mal@linux.ru");
         R3.addContact(ContactType.PHONE, "7710118");
         R1.addObjective("Objective1");
@@ -87,7 +87,7 @@ abstract public class AbstractStorageTest {
 
     @Test
     public void testUpdate() throws Exception {
-        R2.setFullName("Update Наташа");
+        R2.setFullName("Наташа Григорьева");
         storage.update(R2);
         assertEquals(R2, storage.load(R2.getUuid()));
     }
